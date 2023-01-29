@@ -1,58 +1,56 @@
 import { StatusBar } from 'expo-status-bar';
-import { useCallback } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
+import { StyleSheet, View, Button } from 'react-native';
+// import * as SplashScreen from 'expo-splash-screen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Login from './screens/auth/Login';
 import Register from './screens/auth/Register';
+import Login from './screens/auth/Login';
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
-// const image = require('./assets/images/IMG_3764.jpeg');
-// const windowDimensions = Dimensions.get('window');
+const Stack = createNativeStackNavigator();
 
-export default function App() {
-  // const [dimensions, setDimensions] = useState({
-  //   window: windowDimensions,
-  // });
-
-  // useEffect(() => {
-  //   const subscription = Dimensions.addEventListener('change', ({ window }) => {
-  //     setDimensions({ window });
-  //     const { width } = dimensions.window;
-  //     console.log('width', width);
-  //   });
-  //   return () => subscription?.remove();
-  // });
-
-  const [fontsLoaded] = useFonts({
-    'DMMono-Regular': require('./assets/fonts/DMMono-Regular.ttf'),
-  });
-
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
-  if (!fontsLoaded) {
-    return null;
-  }
-
+function LoginScreen({ navigation }) {
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
-      {/* <Register /> */}
-      <Login />
+    <View style={styles.container}>
+      <Login navigation={navigation} />
       <StatusBar style="auto" />
     </View>
+  );
+}
+
+function RegisterScreen({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <Register navigation={navigation} />
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Login"
+          component={LoginScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Register"
+          component={RegisterScreen}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },

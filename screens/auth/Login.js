@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useCallback } from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,6 +13,10 @@ import {
   Keyboard,
   Dimensions,
 } from 'react-native';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+
+SplashScreen.preventAutoHideAsync();
 
 const image = require('../../assets/images/IMG_3764.jpeg');
 const windowDimensions = Dimensions.get('window');
@@ -20,21 +25,35 @@ const initialState = {
   password: '',
 };
 
-export default function Login() {
+export default function Login({ navigation }) {
   const [onKeyboardShown, setOnKeyboardShown] = useState(false);
   const [state, setState] = useState(initialState);
   const [dimensions, setDimensions] = useState({
     window: windowDimensions,
   });
 
-  useEffect(() => {
-    const subscription = Dimensions.addEventListener('change', ({ window }) => {
-      setDimensions({ window });
-      const { width } = dimensions.window;
-      console.log('width', width);
-    });
-    return () => subscription?.remove();
+  const [fontsLoaded] = useFonts({
+    'DMMono-Regular': require('../../assets/fonts/DMMono-Regular.ttf'),
   });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  //   useEffect(() => {
+  //     const subscription = Dimensions.addEventListener('change', ({ window }) => {
+  //       setDimensions({ window });
+  //       const { width } = dimensions.window;
+  //       console.log('width', width);
+  //     });
+  //     return () => subscription?.remove();
+  //   });
 
   const keyboardHide = () => {
     setOnKeyboardShown(false);
@@ -43,7 +62,7 @@ export default function Login() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayoutRootView}>
       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -110,7 +129,24 @@ export default function Login() {
                   />
                 </View>
                 <TouchableOpacity style={styles.signUp} onPress={keyboardHide}>
-                  <Text style={styles.signUpText}>Sign in</Text>
+                  <Text style={styles.signUpText}>Login</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{ paddingTop: '5%' }}
+                  onPress={() => navigation.navigate('Register')}
+                >
+                  <Text style={{ color: 'white' }}>
+                    If new to app&nbsp;&nbsp;
+                    <Text
+                      style={{
+                        fontFamily: 'DMMono-Regular',
+                        fontSize: '20%',
+                        color: '#ff1493',
+                      }}
+                    >
+                      SignUp
+                    </Text>
+                  </Text>
                 </TouchableOpacity>
               </View>
             </SafeAreaView>
