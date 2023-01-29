@@ -84,7 +84,7 @@ export default function Register({ navigation }) {
                 style={[
                   styles.signUpContainer,
                   {
-                    marginBottom: onKeyboardShown ? '5%' : '12%',
+                    marginBottom: onKeyboardShown ? '10%' : '12%',
                   },
                 ]}
               >
@@ -156,7 +156,7 @@ export default function Register({ navigation }) {
                   onPress={() => navigation.navigate('Login')}
                 >
                   <Text style={{ color: 'white' }}>
-                    If registered user{' '}
+                    If registered user{'  '}
                     <Text
                       style={{
                         fontFamily: 'DMMono-Regular',
