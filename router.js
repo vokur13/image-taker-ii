@@ -2,8 +2,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+// icons
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const AuthStack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 import Register from './screens/auth/Register';
@@ -57,43 +61,63 @@ function ProfileScreen({ navigation }) {
   );
 }
 
-export default function useRoute(isAuth) {
+export const useRoutes = (isAuth) => {
   if (!isAuth) {
     return (
-      <AuthStack.Navigator>
-        <AuthStack.Screen
+      <Stack.Navigator>
+        <Stack.Screen
           options={{ headerShown: false }}
           name="Login"
           component={LoginScreen}
         />
-        <AuthStack.Screen
+        <Stack.Screen
           options={{ headerShown: false }}
           name="Register"
           component={RegisterScreen}
         />
-      </AuthStack.Navigator>
+      </Stack.Navigator>
+    );
+  } else {
+    return (
+      <Tab.Navigator tabBarOptions={{ showLabel: false }}>
+        <Tab.Screen
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ focused, size, color }) => (
+              <FontAwesome name="list" size={size} color={color} />
+            ),
+          }}
+          name="Posts"
+          component={PostsScreen}
+        />
+        <Tab.Screen
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ focused, size, color }) => (
+              <Ionicons name="create" size={size} color={color} />
+            ),
+          }}
+          name="Create"
+          component={CreateScreen}
+        />
+        <Tab.Screen
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ focused, size, color }) => (
+              <MaterialCommunityIcons
+                name="face-man-profile"
+                size={size}
+                color={color}
+              />
+            ),
+          }}
+          name="Profile"
+          component={ProfileScreen}
+        />
+      </Tab.Navigator>
     );
   }
-  return (
-    <Tab.Navigator>
-      <Tab.Screen
-        options={{ headerShown: false }}
-        name="Posts"
-        component={PostsScreen}
-      />
-      <Tab.Screen
-        options={{ headerShown: false }}
-        name="Create"
-        component={CreateScreen}
-      />
-      <Tab.Screen
-        options={{ headerShown: false }}
-        name="Profile"
-        component={ProfileScreen}
-      />
-    </Tab.Navigator>
-  );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
