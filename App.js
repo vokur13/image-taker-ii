@@ -1,10 +1,19 @@
+import NetInfo from '@react-native-community/netinfo';
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Button } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { useRoutes } from './router';
 
 export default function App() {
-  const router = useRoutes(true);
+  const unsubscribe = NetInfo.addEventListener((state) => {
+    console.log('Connection type', state.type);
+    console.log('Is connected?', state.isConnected);
+  });
+
+  // To unsubscribe to these update, just use:
+  unsubscribe();
+
+  const router = useRoutes(false);
   return <NavigationContainer>{router}</NavigationContainer>;
 }
 

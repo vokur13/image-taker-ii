@@ -79,7 +79,18 @@ export const useRoutes = (isAuth) => {
     );
   } else {
     return (
-      <Tab.Navigator tabBarOptions={{ showLabel: false }}>
+      // <Tab.Navigator tabBarOptions={{ showLabel: false }}>
+      <Tab.Navigator
+        screenOptions={{
+          // tabBarShowLabel: false,
+          tabBarStyle: [
+            {
+              display: 'flex',
+            },
+            null,
+          ],
+        }}
+      >
         <Tab.Screen
           options={{
             headerShown: false,
