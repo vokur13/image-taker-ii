@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, StatusBar } from 'react-native';
 
-export default function Profile() {
+export default function Posts({ route }) {
+  console.log('route.params', route);
+
   return (
     <View style={styles.container}>
       <Text>Posts</Text>

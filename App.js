@@ -13,7 +13,7 @@ export default function App() {
   // To unsubscribe to these update, just use:
   unsubscribe();
 
-  const router = useRoutes(false);
+  const router = useRoutes(true);
   return <NavigationContainer>{router}</NavigationContainer>;
 }
 

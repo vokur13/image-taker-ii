@@ -24,7 +24,8 @@
     "react-native-tableview-simple": "^4.3.1",
     "save": "^2.9.0",
     "@react-native-community/netinfo": "9.3.5",
-    "expo-network": "~5.0.0"
+    "expo-network": "~5.0.0",
+    "expo-camera": "~13.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12"
