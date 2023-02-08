@@ -1,9 +1,10 @@
 import NetInfo from '@react-native-community/netinfo';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useRoutes } from './router';
-// import { store } from './app/store';
+
+import { store } from './redux/store';
 import { Provider } from 'react-redux';
 
 export default function App() {
@@ -15,10 +16,11 @@ export default function App() {
   // To unsubscribe to these update, just use:
   unsubscribe();
 
-  const router = useRoutes(true);
+  const router = useRoutes(false);
+
   return (
-    <Provider>
-      <NavigationContainer>{router}</NavigationContainer>;
+    <Provider store={store}>
+      <NavigationContainer>{router}</NavigationContainer>
     </Provider>
   );
 }
