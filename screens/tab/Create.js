@@ -8,9 +8,12 @@ import {
   StatusBar,
   Image,
 } from 'react-native';
+import * as Location from 'expo-location';
 
 export default function CreateScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState(null);
 
@@ -18,6 +21,14 @@ export default function CreateScreen({ navigation }) {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
+    })();
+
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
     })();
   }, []);
 
@@ -29,13 +40,27 @@ export default function CreateScreen({ navigation }) {
     return <Text>No access to camera</Text>;
   }
 
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+
   const takePhoto = async () => {
     const photo = await camera.takePictureAsync();
+    let location = await Location.getCurrentPositionAsync({});
+    console.log(
+      'location',
+      location.coords.latitude,
+      location.coords.longitude
+    );
+    setLocation(location);
     setPhoto(photo.uri);
   };
 
   const sendPhoto = () => {
-    navigation.navigate('Posts', { photo });
+    navigation.navigate('DefaultScreen', { photo });
   };
 
   return (

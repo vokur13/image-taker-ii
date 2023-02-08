@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Button } from 'react-native';
 import { useRoutes } from './router';
+// import { store } from './app/store';
+import { Provider } from 'react-redux';
 
 export default function App() {
   const unsubscribe = NetInfo.addEventListener((state) => {
@@ -14,7 +16,11 @@ export default function App() {
   unsubscribe();
 
   const router = useRoutes(true);
-  return <NavigationContainer>{router}</NavigationContainer>;
+  return (
+    <Provider>
+      <NavigationContainer>{router}</NavigationContainer>;
+    </Provider>
+  );
 }
 
 const styles = StyleSheet.create({
