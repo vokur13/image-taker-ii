@@ -12,9 +12,9 @@ const Tab = createBottomTabNavigator();
 
 import Register from './screens/auth/Register';
 import Login from './screens/auth/Login';
-import Posts from './screens/tab/Posts';
-import Create from './screens/tab/Create';
-import Profile from './screens/tab/Profile';
+import PostsScreen from './screens/tab/Posts';
+import CreateScreen from './screens/tab/Create';
+import ProfileScreen from './screens/tab/Profile';
 
 function LoginScreen({ navigation }) {
   return (
@@ -34,32 +34,32 @@ function RegisterScreen({ navigation }) {
   );
 }
 
-function PostsScreen({ navigation }) {
-  return (
-    <View style={styles.container}>
-      <Posts navigation={navigation} />
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+// function PostsScreen({ navigation }) {
+//   return (
+//     <View style={styles.container}>
+//       <Posts navigation={navigation} />
+//       <StatusBar style="auto" />
+//     </View>
+//   );
+// }
 
-function CreateScreen({ navigation }) {
-  return (
-    <View style={styles.container}>
-      <Create navigation={navigation} />
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+// function CreateScreen({ navigation }) {
+//   return (
+//     <View style={styles.container}>
+//       <Create navigation={navigation} />
+//       <StatusBar style="auto" />
+//     </View>
+//   );
+// }
 
-function ProfileScreen({ navigation }) {
-  return (
-    <View style={styles.container}>
-      <Profile navigation={navigation} />
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+// function ProfileScreen({ navigation }) {
+//   return (
+//     <View style={styles.container}>
+//       <Profile navigation={navigation} />
+//       <StatusBar style="auto" />
+//     </View>
+//   );
+// }
 
 export const useRoutes = (isAuth) => {
   if (!isAuth) {

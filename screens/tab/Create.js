@@ -9,7 +9,7 @@ import {
   Image,
 } from 'react-native';
 
-export default function Create({ navigation }) {
+export default function CreateScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState(null);
@@ -32,12 +32,10 @@ export default function Create({ navigation }) {
   const takePhoto = async () => {
     const photo = await camera.takePictureAsync();
     setPhoto(photo.uri);
-    // console.log('photo-->', photo);
   };
 
-  const sendPhoto = async () => {
-    // await navigation.navigate('Posts', { photo });
-    await navigation.navigate('Posts', { photo });
+  const sendPhoto = () => {
+    navigation.navigate('Posts', { photo });
   };
 
   return (

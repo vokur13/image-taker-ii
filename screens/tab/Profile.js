@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, StatusBar } from 'react-native';
 
-export default function Profile() {
+export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <Text>Profile</Text>
