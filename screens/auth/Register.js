@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useCallback } from 'react';
+import { useCallback, useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   StyleSheet,
   Text,
@@ -15,6 +15,8 @@ import {
 } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+
+import { authSignUp } from '../../redux/auth/authOperations';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -32,6 +34,8 @@ export default function Register({ navigation }) {
   const [dimensions, setDimensions] = useState({
     window: windowDimensions,
   });
+
+  const dispatch = useDispatch();
 
   const [fontsLoaded] = useFonts({
     'DMMono-Regular': require('../../assets/fonts/DMMono-Regular.ttf'),
@@ -56,9 +60,10 @@ export default function Register({ navigation }) {
   //     return () => subscription?.remove();
   //   });
 
-  const keyboardHide = () => {
+  const handleSubmit = () => {
     setOnKeyboardShown(false);
     Keyboard.dismiss();
+    dispatch(authSignUp(state));
     setState(initialState);
   };
 
@@ -69,7 +74,7 @@ export default function Register({ navigation }) {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.container}
         >
-          <TouchableWithoutFeedback onPress={keyboardHide}>
+          <TouchableWithoutFeedback onPress={handleSubmit}>
             <SafeAreaView style={styles.safeView}>
               <View style={styles.welcomeTextContainer}>
                 <Text style={styles.welcomeText}>ImageTaker II</Text>
@@ -122,7 +127,10 @@ export default function Register({ navigation }) {
                     }}
                     value={state.email}
                     onChangeText={(value) =>
-                      setState((prevState) => ({ ...prevState, email: value }))
+                      setState((prevState) => ({
+                        ...prevState,
+                        email: value.toLowerCase(),
+                      }))
                     }
                   />
                 </View>
@@ -146,7 +154,7 @@ export default function Register({ navigation }) {
                     }
                   />
                 </View>
-                <TouchableOpacity style={styles.signUp} onPress={keyboardHide}>
+                <TouchableOpacity style={styles.signUp} onPress={handleSubmit}>
                   <Text style={styles.signUpText}>Sign up</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
