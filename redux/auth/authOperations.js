@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   updateProfile,
+  signOut,
 } from 'firebase/auth';
 import { app } from '../../firebase/config';
 
@@ -55,7 +56,9 @@ export const authLogin =
     }
   };
 
-export const authLogout = () => async (dispatch, getState) => {};
+export const authLogout = () => async (dispatch, getState) => {
+  await signOut(auth);
+};
 
 export const authStateChanged = () => async (dispatch, getState) => {
   onAuthStateChanged(auth, (user) => {
@@ -63,8 +66,14 @@ export const authStateChanged = () => async (dispatch, getState) => {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
       const uid = user.uid;
-      setUser(uid);
-      // ...
+      const displayName = user.displayName;
+      dispatch(
+        authSlice.actions.updateUserProfile({
+          userId: uid,
+          nickname: displayName,
+        })
+      );
+      dispatch(authSlice.actions.authStateChange({ authStatus: true }));
     } else {
       // User is signed out
       // ...
