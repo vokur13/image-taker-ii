@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useRoutes } from '../router';
-import {} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
