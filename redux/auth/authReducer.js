@@ -21,3 +21,5 @@ export const authSlice = createSlice({
 });
 
 console.log('authSlice', authSlice);
+export const { updateUserProfile, authStateChange } = authSlice.actions;
+export default authSlice.reducer;
