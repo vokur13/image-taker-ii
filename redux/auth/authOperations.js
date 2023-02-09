@@ -15,25 +15,13 @@ export const authSignUp =
   ({ nickname, email, password }) =>
   async (dispatch, getState) => {
     try {
-      // const userCredential =
       await createUserWithEmailAndPassword(auth, email, password);
-      //   const user = userCredential.user;
-
-      // const user = auth.currentUser;
 
       await updateProfile(auth.currentUser, {
         displayName: nickname,
       });
 
-      //   const user = auth.currentUser;
-      //   console.log('user.uid', user.uid);
-
-      //   await user.updateProfile({
-      //     displayName: nickname,
-      //   });
-
       const { uid, displayName } = auth.currentUser;
-      //   console.log(uid, displayName);
 
       await dispatch(
         authSlice.actions.updateUserProfile({
@@ -41,8 +29,6 @@ export const authSignUp =
           nickname: displayName,
         })
       );
-
-      //   const user = auth.currentUser;
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -71,4 +57,17 @@ export const authLogin =
 
 export const authLogout = () => async (dispatch, getState) => {};
 
-export const authStateChanged = () => async (dispatch, getState) => {};
+export const authStateChanged = () => async (dispatch, getState) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      const uid = user.uid;
+      setUser(uid);
+      // ...
+    } else {
+      // User is signed out
+      // ...
+    }
+  });
+};
