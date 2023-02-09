@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useCallback } from 'react';
 import {
   StyleSheet,
@@ -16,6 +17,8 @@ import {
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
+import { authLogin } from '../../redux/auth/authOperations';
+
 SplashScreen.preventAutoHideAsync();
 
 const image = require('../../assets/images/IMG_3764.jpeg');
@@ -31,6 +34,8 @@ export default function Login({ navigation }) {
   const [dimensions, setDimensions] = useState({
     window: windowDimensions,
   });
+
+  const dispatch = useDispatch();
 
   const [fontsLoaded] = useFonts({
     'DMMono-Regular': require('../../assets/fonts/DMMono-Regular.ttf'),
@@ -55,10 +60,16 @@ export default function Login({ navigation }) {
   //     return () => subscription?.remove();
   //   });
 
-  const keyboardHide = () => {
+  const handleSubmit = () => {
     setOnKeyboardShown(false);
     Keyboard.dismiss();
+    dispatch(authLogin(state));
     setState(initialState);
+  };
+
+  const keyboardHide = () => {
+    Keyboard.dismiss();
+    setOnKeyboardShown(false);
   };
 
   return (
@@ -105,7 +116,10 @@ export default function Login({ navigation }) {
                     }}
                     value={state.email}
                     onChangeText={(value) =>
-                      setState((prevState) => ({ ...prevState, email: value }))
+                      setState((prevState) => ({
+                        ...prevState,
+                        email: value.toLowerCase(),
+                      }))
                     }
                   />
                 </View>
@@ -128,7 +142,7 @@ export default function Login({ navigation }) {
                     }
                   />
                 </View>
-                <TouchableOpacity style={styles.signUp} onPress={keyboardHide}>
+                <TouchableOpacity style={styles.signUp} onPress={handleSubmit}>
                   <Text style={styles.signUpText}>Login</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
