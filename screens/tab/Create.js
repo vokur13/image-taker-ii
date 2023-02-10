@@ -1,12 +1,14 @@
 import { Camera, CameraType } from 'expo-camera';
 import { useState, useEffect } from 'react';
 import {
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   StatusBar,
   Image,
+  TextInput,
 } from 'react-native';
 import * as Location from 'expo-location';
 
@@ -30,6 +32,7 @@ export default function CreateScreen({ navigation }) {
   const [errorMsg, setErrorMsg] = useState(null);
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState(null);
+  const [comments, setComments] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -104,7 +107,7 @@ export default function CreateScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Camera style={styles.camera} ref={setCamera}>
         {photo && (
           <View style={styles.imageContainer}>
@@ -118,13 +121,16 @@ export default function CreateScreen({ navigation }) {
           <Text style={styles.text}>Snap</Text>
         </TouchableOpacity>
       </Camera>
+      <View style={styles.inputContainer}>
+        <TextInput style={styles.inputText} onChangeText={setComments} />
+      </View>
       <View>
         <TouchableOpacity style={styles.sendButton} onPress={sendPhoto}>
           <Text style={styles.sendText}>Send</Text>
         </TouchableOpacity>
       </View>
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -133,17 +139,19 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     // justifyContent: 'center',
-    // alignItems: 'center',
+    alignItems: 'center',
+    // margin: '1%',
   },
   camera: {
     // flex: 1,
     height: '70%',
-    marginTop: '16%',
+    marginTop: '10%',
     // position: 'relative',
     marginHorizontal: '1%',
     alignItems: 'center',
     justifyContent: 'flex-end',
     borderRadius: '12%',
+    width: '100%',
   },
   button: {
     position: 'absolute',
@@ -169,8 +177,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
   },
+  inputContainer: {
+    width: '100%',
+    borderColor: 'red',
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+  inputText: {
+    height: 50,
+    fontSize: '20%',
+  },
   sendButton: {
-    marginHorizontal: 30,
+    // marginHorizontal: 30,
     height: 40,
     borderWidth: 2,
     borderColor: '#dc143c',
@@ -178,9 +196,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '98%',
   },
   sendText: {
     color: '#dc143c',
-    fontSize: 20,
+    fontSize: '20',
   },
 });
