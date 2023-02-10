@@ -10,6 +10,20 @@ import {
 } from 'react-native';
 import * as Location from 'expo-location';
 
+// import { getAuth } from 'firebase/auth';
+import { uploadData } from '../../firebase/uploadBytesResumable';
+// const auth = getAuth(app);
+import { getFirestore } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
+
+const storage = getStorage();
+
+// // Points to the root reference
+const storageRef = ref(storage);
+
+// // Points to 'images'
+const imagesRef = ref(storageRef, 'images');
+
 export default function CreateScreen({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [location, setLocation] = useState(null);
@@ -60,7 +74,33 @@ export default function CreateScreen({ navigation }) {
   };
 
   const sendPhoto = () => {
+    uploadData(photo);
+    // uploadPhoto();
     navigation.navigate('DefaultScreen', { photo });
+  };
+
+  const uploadPhoto = async () => {
+    const response = await fetch(photo);
+    const file = await response.blob();
+
+    const uniqueId = Date.now().toString();
+
+    // Points to 'images/`${uniqueId}`'
+    // Note that you can use variables to create child values
+    const fileName = `${uniqueId}`;
+    const spaceRef = ref(imagesRef, fileName);
+
+    // File path is 'images/`${uniqueId}`'
+    const path = spaceRef.fullPath;
+
+    // File name is 'images/`${uniqueId}`'
+    const name = spaceRef.name;
+
+    // Points to 'images'
+    const imagesRefAgain = spaceRef.parent;
+
+    // 'file' comes from the Blob or File API
+    await uploadBytes(spaceRef, file);
   };
 
   return (
