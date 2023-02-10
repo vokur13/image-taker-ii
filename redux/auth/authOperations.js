@@ -8,7 +8,7 @@ import {
 } from 'firebase/auth';
 import { app } from '../../firebase/config';
 
-import { authSlice } from './authReducer';
+import { updateUserProfile, authStateChange, authLogout } from './authReducer';
 
 const auth = getAuth(app);
 
@@ -25,7 +25,7 @@ export const authSignUp =
       const { uid, displayName } = auth.currentUser;
 
       await dispatch(
-        authSlice.actions.updateUserProfile({
+        updateUserProfile({
           userId: uid,
           nickname: displayName,
         })
@@ -56,8 +56,9 @@ export const authLogin =
     }
   };
 
-export const authLogout = () => async (dispatch, getState) => {
+export const authSignOut = () => async (dispatch, getState) => {
   await signOut(auth);
+  await dispatch(authLogout());
 };
 
 export const authStateChanged = () => async (dispatch, getState) => {
@@ -68,15 +69,14 @@ export const authStateChanged = () => async (dispatch, getState) => {
       const uid = user.uid;
       const displayName = user.displayName;
       dispatch(
-        authSlice.actions.updateUserProfile({
+        updateUserProfile({
           userId: uid,
           nickname: displayName,
         })
       );
-      dispatch(authSlice.actions.authStateChange({ authStatus: true }));
+      dispatch(authStateChange({ authStatus: true }));
     } else {
       // User is signed out
-      // ...
     }
   });
 };
