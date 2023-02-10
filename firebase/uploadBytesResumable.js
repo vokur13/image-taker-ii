@@ -63,11 +63,10 @@ export const uploadData = async (photo) => {
           break;
       }
     },
-    () => {
-      // Upload completed successfully, now we can get the download URL
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log('File available at', downloadURL);
-      });
+    async () => {
+      //   Upload completed successfully, now we can get the download URL
+      const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+      console.log('File available at', downloadURL);
     }
   );
 };

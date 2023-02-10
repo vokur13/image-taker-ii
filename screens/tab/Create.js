@@ -1,5 +1,6 @@
 import { Camera, CameraType } from 'expo-camera';
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import {
   SafeAreaView,
   StyleSheet,
@@ -12,11 +13,11 @@ import {
 } from 'react-native';
 import * as Location from 'expo-location';
 
-// import { getAuth } from 'firebase/auth';
+import { app } from '../../firebase/config';
 import { uploadData } from '../../firebase/uploadBytesResumable';
-// const auth = getAuth(app);
-import { getFirestore } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
+const db = getFirestore(app);
 
 const storage = getStorage();
 
@@ -33,6 +34,8 @@ export default function CreateScreen({ navigation }) {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState(null);
   const [comments, setComments] = useState('');
+
+  const { userId, nickname } = useSelector((state) => state.auth);
 
   useEffect(() => {
     (async () => {
@@ -67,19 +70,36 @@ export default function CreateScreen({ navigation }) {
   const takePhoto = async () => {
     const photo = await camera.takePictureAsync();
     let location = await Location.getCurrentPositionAsync({});
-    console.log(
-      'location',
-      location.coords.latitude,
-      location.coords.longitude
-    );
+    // console.log(
+    //   'location',
+    //   location.coords.latitude,
+    //   location.coords.longitude
+    // );
     setLocation(location);
     setPhoto(photo.uri);
   };
 
   const sendPhoto = () => {
-    uploadData(photo);
+    uploadPosts();
     // uploadPhoto();
     navigation.navigate('DefaultScreen', { photo });
+  };
+
+  const uploadPosts = async () => {
+    try {
+      const downloadURL = await uploadData(photo);
+      console.log('downloadURL', downloadURL);
+      // const docRef = await addDoc(collection(db, 'posts'), {
+      //   userId,
+      //   nickname,
+      //   downloadURL,
+      //   comments,
+      //   location: location.coords,
+      // });
+      // console.log('Document written with ID: ', docRef.id);
+    } catch (e) {
+      console.error('Error adding document: ', e);
+    }
   };
 
   const uploadPhoto = async () => {
