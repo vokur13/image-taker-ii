@@ -7,6 +7,7 @@ import {
   FlatList,
   Image,
   Button,
+  Text,
 } from 'react-native';
 
 import { app } from '../../firebase/config';
@@ -23,7 +24,6 @@ export default function PostsDefaultScreen({ navigation }) {
         querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
       );
     });
-    console.log('posts', posts);
   };
 
   useEffect(() => {
@@ -41,15 +41,28 @@ export default function PostsDefaultScreen({ navigation }) {
               source={{ uri: item.downloadURL }}
               style={styles.postsImage}
             />
+            <View>
+              <Text>{item.comments}</Text>
+            </View>
+            <View>
+              <Button
+                title="go to Map"
+                onPress={() =>
+                  navigation.navigate('Map', { location: item.location })
+                }
+              />
+              <Button
+                title="go to Comments"
+                onPress={() =>
+                  navigation.navigate('Comments', { postId: item.id })
+                }
+              />
+            </View>
           </View>
         )}
         keyExtractor={(item, index) => index.toString()}
       />
-      <Button title="go to Map" onPress={() => navigation.navigate('Map')} />
-      <Button
-        title="go to Comments"
-        onPress={() => navigation.navigate('Comments')}
-      />
+
       <StatusBar style="auto" />
     </SafeAreaView>
   );
