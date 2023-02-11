@@ -80,23 +80,25 @@ export default function CreateScreen({ navigation }) {
   };
 
   const sendPhoto = () => {
-    uploadPosts();
+    // uploadPosts();
     // uploadPhoto();
+    uploadData(photo);
     navigation.navigate('DefaultScreen', { photo });
   };
 
   const uploadPosts = async () => {
     try {
-      const downloadURL = await uploadData(photo);
-      console.log('downloadURL', downloadURL);
-      // const docRef = await addDoc(collection(db, 'posts'), {
-      //   userId,
-      //   nickname,
-      //   downloadURL,
-      //   comments,
-      //   location: location.coords,
-      // });
-      // console.log('Document written with ID: ', docRef.id);
+      // const downloadURL = await uploadData(photo);
+      const downloadURL = 'fake http://';
+      // console.log('downloadURL', downloadURL);
+      const docRef = await addDoc(collection(db, 'posts'), {
+        userId,
+        nickname,
+        downloadURL,
+        comments,
+        location: location.coords,
+      });
+      console.log('Document written with ID: ', docRef.id);
     } catch (e) {
       console.error('Error adding document: ', e);
     }
