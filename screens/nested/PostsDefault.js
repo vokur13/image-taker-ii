@@ -9,15 +9,26 @@ import {
   Button,
 } from 'react-native';
 
-export default function PostsDefaultScreen({ route, navigation }) {
+import { app } from '../../firebase/config';
+import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
+const db = getFirestore(app);
+
+export default function PostsDefaultScreen({ navigation }) {
   const [posts, setPosts] = useState([]);
 
+  const getPosts = async () => {
+    const postsRef = collection(db, 'posts');
+    onSnapshot(postsRef, (querySnapshot) => {
+      setPosts(
+        querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    });
+    console.log('posts', posts);
+  };
+
   useEffect(() => {
-    if (route.params) {
-      setPosts((prevState) => [...prevState, route.params]);
-    }
-  }, [route.params]);
-  // console.log('posts', posts);
+    getPosts();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -26,7 +37,10 @@ export default function PostsDefaultScreen({ route, navigation }) {
         data={posts}
         renderItem={({ item }) => (
           <View style={styles.postsImageContainer}>
-            <Image source={{ uri: item.photo }} style={styles.postsImage} />
+            <Image
+              source={{ uri: item.downloadURL }}
+              style={styles.postsImage}
+            />
           </View>
         )}
         keyExtractor={(item, index) => index.toString()}

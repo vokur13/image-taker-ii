@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import {
   getStorage,
   ref,
@@ -30,6 +28,36 @@ export const uploadData = async (photo) => {
 
   //   Upload file and metadata to the object 'images/`${uniqueId}`'
   const uploadTask = uploadBytesResumable(spaceRef, file, metadata);
+
+  //   // Get the download URL
+  //   const downloadURL = getDownloadURL(spaceRef)
+  //     .then((url) => {
+  //       // Insert url into an <img> tag to "download"
+  //       console.log('url', url);
+  //     })
+  //     .catch((error) => {
+  //       // A full list of error codes is available at
+  //       // https://firebase.google.com/docs/storage/web/handle-errors
+  //       switch (error.code) {
+  //         case 'storage/object-not-found':
+  //           // File doesn't exist
+  //           break;
+  //         case 'storage/unauthorized':
+  //           // User doesn't have permission to access the object
+  //           break;
+  //         case 'storage/canceled':
+  //           // User canceled the upload
+  //           break;
+
+  //         // ...
+
+  //         case 'storage/unknown':
+  //           // Unknown error occurred, inspect the server response
+  //           break;
+  //       }
+  //     });
+
+  //   console.log('Get the download URL', downloadURL);
 
   // Listen for state changes, errors, and completion of the upload.
   uploadTask.on(
@@ -65,6 +93,7 @@ export const uploadData = async (photo) => {
           break;
       }
     },
+
     async () => {
       //   Upload completed successfully, now we can get the download URL
       const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);

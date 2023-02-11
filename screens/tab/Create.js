@@ -15,7 +15,7 @@ import * as Location from 'expo-location';
 
 import { app } from '../../firebase/config';
 import { uploadData } from '../../firebase/uploadBytesResumable';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 const db = getFirestore(app);
 
@@ -80,17 +80,13 @@ export default function CreateScreen({ navigation }) {
   };
 
   const sendPhoto = () => {
-    // uploadPosts();
-    // uploadPhoto();
-    uploadData(photo);
+    uploadPosts();
     navigation.navigate('DefaultScreen', { photo });
   };
 
   const uploadPosts = async () => {
     try {
-      // const downloadURL = await uploadData(photo);
-      const downloadURL = 'fake http://';
-      // console.log('downloadURL', downloadURL);
+      const downloadURL = await uploadPhoto();
       const docRef = await addDoc(collection(db, 'posts'), {
         userId,
         nickname,
@@ -126,6 +122,8 @@ export default function CreateScreen({ navigation }) {
 
     // 'file' comes from the Blob or File API
     await uploadBytes(spaceRef, file);
+
+    return await getDownloadURL(spaceRef);
   };
 
   return (
