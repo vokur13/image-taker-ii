@@ -33,7 +33,7 @@ export default function CreateScreen({ navigation }) {
   const [errorMsg, setErrorMsg] = useState(null);
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState(null);
-  const [comments, setComments] = useState('');
+  const [title, setTitle] = useState('');
 
   const { userId, nickname } = useSelector((state) => state.auth);
 
@@ -91,7 +91,7 @@ export default function CreateScreen({ navigation }) {
         userId,
         nickname,
         downloadURL,
-        comments,
+        title,
         location: location.coords,
       });
       console.log('Document written with ID: ', docRef.id);
@@ -142,7 +142,7 @@ export default function CreateScreen({ navigation }) {
         </TouchableOpacity>
       </Camera>
       <View style={styles.inputContainer}>
-        <TextInput style={styles.inputText} onChangeText={setComments} />
+        <TextInput style={styles.inputText} onChangeText={setTitle} />
       </View>
       <View>
         <TouchableOpacity style={styles.sendButton} onPress={sendPhoto}>

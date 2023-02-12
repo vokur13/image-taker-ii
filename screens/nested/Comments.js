@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useSelector } from 'react-redux';
 import {
+  SafeAreaView,
+  FlatList,
   View,
   Text,
   StyleSheet,
@@ -9,67 +11,82 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import { app } from '../../firebase/config';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import {
-  getFirestore,
   collection,
   addDoc,
   doc,
   getDoc,
-  setDoc,
+  onSnapshot,
 } from 'firebase/firestore';
 
 import { db } from '../../firebase/config';
 
-const storage = getStorage();
-
-// // Points to the root reference
-const storageRef = ref(storage);
-
-// // Points to 'comments'
-const commentsRef = ref(storageRef, 'comments');
-
 const CommentsScreen = ({ route }) => {
   const [comments, setComments] = useState('');
+  const [allComments, setAllComments] = useState([]);
   const { nickname } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    getAllPosts();
+  }, []);
 
   const { postId } = route.params;
 
-  const query = collection(db, 'posts', postId, 'comments');
+  const query = collection(db, 'posts');
   const [docs, loading, error] = useCollectionData(query);
 
-  const createPost = async () => {
-    console.log(docs);
+  const getAllPosts = async () => {
     try {
       const docRef = doc(db, 'posts', postId);
       const docSnap = await getDoc(docRef);
-      await addDoc(docRef, collection(db, 'comments'), {
-        comments,
-        nickname,
-      });
+
+      if (docSnap.exists()) {
+        const commentsRef = collection(docRef, 'comments');
+        onSnapshot(commentsRef, (querySnapshot) => {
+          setAllComments(
+            querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+          );
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const createPost = async () => {
+    try {
+      const docRef = doc(db, 'posts', postId);
+      const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
         console.log('Document data:', docSnap.data());
+        const commentsRef = collection(docRef, 'comments');
+        await addDoc(commentsRef, {
+          comments,
+          nickname,
+        });
       } else {
         // doc.data() will be undefined in this case
         console.log('No such document!');
       }
     } catch (error) {
       console.log(error);
+    } finally {
     }
-    // const docRef = await addDoc(
-    //   collection(
-    //     db,
-    //     'posts',
-    //     postId,
-    //     collection(db, 'comments', { comments, nickname })
-    //   )
-    // );
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={allComments}
+        renderItem={({ item }) => (
+          <View style={styles.commentContainer}>
+            <Text>{item.nickname}</Text>
+            <Text>{item.comments}</Text>
+          </View>
+        )}
+        keyExtractor={(item) => item.id.toString()}
+      />
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputText} onChangeText={setComments} />
       </View>
@@ -78,7 +95,7 @@ const CommentsScreen = ({ route }) => {
           <Text style={styles.sendText}>Add Post</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -115,6 +132,12 @@ const styles = StyleSheet.create({
   sendText: {
     color: '#dc143c',
     fontSize: '20',
+  },
+  commentContainer: {
+    borderWidth: 1,
+    borderColor: '#dc143c',
+    marginBottom: '1%',
+    paddingHorizontal: 2,
   },
 });
 

@@ -42,7 +42,7 @@ export default function PostsDefaultScreen({ navigation }) {
               style={styles.postsImage}
             />
             <View>
-              <Text>{item.comments}</Text>
+              <Text>{item.title}</Text>
             </View>
             <View>
               <Button
