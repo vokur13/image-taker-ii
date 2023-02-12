@@ -88,6 +88,7 @@ export default function CreateScreen({ navigation }) {
   const sendPhoto = () => {
     uploadPosts();
     navigation.navigate('DefaultScreen', { photo });
+    setTitle('');
   };
 
   const uploadPosts = async () => {
@@ -120,15 +121,6 @@ export default function CreateScreen({ navigation }) {
     // Note that you can use variables to create child values
     const fileName = `${uniqueId}`;
     const spaceRef = ref(imagesRef, fileName);
-
-    // File path is 'images/`${uniqueId}`'
-    const path = spaceRef.fullPath;
-
-    // File name is 'images/`${uniqueId}`'
-    const name = spaceRef.name;
-
-    // Points to 'images'
-    const imagesRefAgain = spaceRef.parent;
 
     // 'file' comes from the Blob or File API
     await uploadBytes(spaceRef, file);
