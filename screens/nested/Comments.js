@@ -71,7 +71,6 @@ const CommentsScreen = ({ route }) => {
       }
     } catch (error) {
       console.log(error);
-    } finally {
     }
   };
 

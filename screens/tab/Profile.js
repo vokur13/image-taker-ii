@@ -1,19 +1,23 @@
 import { useEffect } from 'react';
-import { View, Text, StyleSheet, StatusBar, Button } from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  StyleSheet,
+  StatusBar,
+  Button,
+  FlatList,
+  Image,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { authSignOut } from '../../redux/auth/authOperations';
 
-import {
-  getDoc,
-  onSnapshot,
-  collection,
-  query,
-  where,
-  getDocs,
-} from 'firebase/firestore';
+import { onSnapshot, collection, query, where } from 'firebase/firestore';
 import { db } from '../../firebase/config';
+import { useState } from 'react';
 
 export default function ProfileScreen() {
+  const [userPosts, setUserPosts] = useState([]);
   const dispatch = useDispatch();
   const { userId } = useSelector((state) => state.auth);
 
@@ -22,40 +26,15 @@ export default function ProfileScreen() {
   }, []);
 
   const getUserPosts = async () => {
-    // const docRef = doc(db, 'posts', postId);
-    // const docSnap = await getDoc(docRef);
-
-    // if (docSnap.exists()) {
-    //   const commentsRef = collection(docRef, 'comments');
-    //   onSnapshot(commentsRef, (querySnapshot) => {
-    //     setAllComments(
-    //       querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    //     );
-    //   });
-    // }
-
-    const q = query(collection(db, 'posts'), where('userId', '==', userId));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, ' => ', doc.data());
+    const postsRef = query(
+      collection(db, 'posts'),
+      where('userId', '==', userId)
+    );
+    onSnapshot(postsRef, (querySnapshot) => {
+      setUserPosts(
+        querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
     });
-    // const docSnap = await getDoc(q);
-
-    // if (docSnap.exists()) {
-    //   const commentsRef = collection(q, 'comments');
-    //   onSnapshot(commentsRef, (querySnapshot) => {
-    //     concole.log(
-    //       querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    //     );
-    //   });
-    // }
-
-    // onSnapshot(postsRef, (querySnapshot) => {
-    //   console.log(
-    //     querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    //   );
-    // });
   };
 
   const logOut = () => {
@@ -63,18 +42,48 @@ export default function ProfileScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text>Profile</Text>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        style={styles.flatList}
+        data={userPosts}
+        renderItem={({ item }) => (
+          <View style={styles.postsImageContainer}>
+            <Image
+              source={{ uri: item.downloadURL }}
+              style={styles.postsImage}
+            />
+            <View>
+              <Text>{item.title}</Text>
+            </View>
+          </View>
+        )}
+        keyExtractor={(item) => item.id.toString()}
+      />
       <Button title="SignOut" onPress={logOut} />
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    marginTop: StatusBar.currentHeight || 0,
+  },
+  flatList: {
+    flex: 1,
+    backgroundColor: 'yellow',
+  },
+  postsImageContainer: {
+    padding: '1%',
+    backgroundColor: 'green',
+    marginBottom: '1%',
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  postsImage: {
+    height: 150,
+    width: '100%',
+    borderRadius: 8,
   },
 });

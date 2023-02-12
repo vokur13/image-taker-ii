@@ -60,7 +60,7 @@ export default function PostsDefaultScreen({ navigation }) {
             </View>
           </View>
         )}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item) => item.id.toString()}
       />
 
       <StatusBar style="auto" />
