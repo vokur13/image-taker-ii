@@ -16,7 +16,13 @@ import * as Location from 'expo-location';
 import { app } from '../../firebase/config';
 import { uploadData } from '../../firebase/uploadBytesResumable';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  updateDoc,
+  serverTimestamp,
+} from 'firebase/firestore';
 const db = getFirestore(app);
 
 const storage = getStorage();
@@ -93,6 +99,10 @@ export default function CreateScreen({ navigation }) {
         downloadURL,
         title,
         location: location.coords,
+      });
+      // Update the timestamp field with the value from the server
+      await updateDoc(docRef, {
+        timestamp: serverTimestamp(),
       });
       console.log('Document written with ID: ', docRef.id);
     } catch (e) {
