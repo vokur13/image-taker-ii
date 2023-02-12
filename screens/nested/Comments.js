@@ -19,7 +19,7 @@ import {
   getDoc,
   setDoc,
 } from 'firebase/firestore';
-// const db = getFirestore(app);
+
 import { db } from '../../firebase/config';
 
 const storage = getStorage();
