@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { useCallback } from 'react';
+
 import {
   StyleSheet,
   Text,
@@ -14,12 +14,13 @@ import {
   Keyboard,
   Dimensions,
 } from 'react-native';
+
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
-import { authLogin } from '../../redux/auth/authOperations';
-
 SplashScreen.preventAutoHideAsync();
+
+import { authLogin } from '../../redux/auth/authOperations';
 
 const image = require('../../assets/images/IMG_3764.jpeg');
 const windowDimensions = Dimensions.get('window');
@@ -37,6 +38,15 @@ export default function Login({ navigation }) {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({ window }) => {
+      setDimensions({ window });
+      const { width } = dimensions.window;
+      console.log('width', width);
+    });
+    return () => subscription?.remove();
+  });
+
   const [fontsLoaded] = useFonts({
     'DMMono-Regular': require('../../assets/fonts/DMMono-Regular.ttf'),
   });
@@ -50,15 +60,6 @@ export default function Login({ navigation }) {
   if (!fontsLoaded) {
     return null;
   }
-
-  //   useEffect(() => {
-  //     const subscription = Dimensions.addEventListener('change', ({ window }) => {
-  //       setDimensions({ window });
-  //       const { width } = dimensions.window;
-  //       console.log('width', width);
-  //     });
-  //     return () => subscription?.remove();
-  //   });
 
   const handleSubmit = () => {
     setOnKeyboardShown(false);
@@ -142,8 +143,11 @@ export default function Login({ navigation }) {
                     }
                   />
                 </View>
-                <TouchableOpacity style={styles.signUp} onPress={handleSubmit}>
-                  <Text style={styles.signUpText}>Login</Text>
+                <TouchableOpacity
+                  style={styles.loginButton}
+                  onPress={handleSubmit}
+                >
+                  <Text style={styles.loginText}>Login</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={{ paddingTop: '5%' }}
@@ -235,19 +239,32 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     fontFamily: 'DMMono-Regular',
   },
-  signUp: {
+  loginButton: {
     width: '100%',
     height: 48,
     borderRadius: 6,
     borderWidth: 1,
     marginTop: '10%',
     marginBottom: 10,
-    backgroundColor: '#8b0000',
-    borderColor: '#f0f8ff',
     alignItems: 'center',
     justifyContent: 'center',
+    ...Platform.select({
+      ios: {
+        backgroundColor: '#8b0000',
+        borderColor: '#f0f8ff',
+      },
+      android: {
+        backgroundColor: 'green',
+        borderColor: 'transparent',
+      },
+      default: {
+        // other platforms, web for example
+        backgroundColor: 'blue',
+        borderColor: '#f0f8ff',
+      },
+    }),
   },
-  signUpText: {
+  loginText: {
     fontSize: 18,
     color: '#f0f8ff',
     fontSize: 28,

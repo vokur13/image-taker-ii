@@ -13,12 +13,13 @@ import {
   Keyboard,
   Dimensions,
 } from 'react-native';
+
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
-import { authSignUp } from '../../redux/auth/authOperations';
-
 SplashScreen.preventAutoHideAsync();
+
+import { authSignUp } from '../../redux/auth/authOperations';
 
 const image = require('../../assets/images/IMG_3764.jpeg');
 const windowDimensions = Dimensions.get('window');
@@ -37,6 +38,15 @@ export default function Register({ navigation }) {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({ window }) => {
+      setDimensions({ window });
+      const { width } = dimensions.window;
+      console.log('width', width);
+    });
+    return () => subscription?.remove();
+  });
+
   const [fontsLoaded] = useFonts({
     'DMMono-Regular': require('../../assets/fonts/DMMono-Regular.ttf'),
   });
@@ -50,15 +60,6 @@ export default function Register({ navigation }) {
   if (!fontsLoaded) {
     return null;
   }
-
-  //   useEffect(() => {
-  //     const subscription = Dimensions.addEventListener('change', ({ window }) => {
-  //       setDimensions({ window });
-  //       const { width } = dimensions.window;
-  //       console.log('width', width);
-  //     });
-  //     return () => subscription?.remove();
-  //   });
 
   const handleSubmit = () => {
     setOnKeyboardShown(false);
@@ -154,7 +155,10 @@ export default function Register({ navigation }) {
                     }
                   />
                 </View>
-                <TouchableOpacity style={styles.signUp} onPress={handleSubmit}>
+                <TouchableOpacity
+                  style={styles.signUpButton}
+                  onPress={handleSubmit}
+                >
                   <Text style={styles.signUpText}>Sign up</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -192,8 +196,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    flex: 1,
-    justifyContent: 'center',
+    // flex: 1,
+    // justifyContent: 'center',
     width: '100%',
     height: '100%',
   },
@@ -250,17 +254,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     fontFamily: 'DMMono-Regular',
   },
-  signUp: {
+  signUpButton: {
     width: '100%',
     height: 48,
     borderRadius: 6,
     borderWidth: 1,
     marginTop: '10%',
     marginBottom: 10,
-    backgroundColor: '#1e90ff',
-    borderColor: '#f0f8ff',
     alignItems: 'center',
     justifyContent: 'center',
+    ...Platform.select({
+      ios: {
+        backgroundColor: '#1e90ff',
+        borderColor: '#f0f8ff',
+      },
+      android: {
+        backgroundColor: 'green',
+        borderColor: 'transparent',
+      },
+      default: {
+        // other platforms, web for example
+        backgroundColor: 'blue',
+        borderColor: '#f0f8ff',
+      },
+    }),
   },
   signUpText: {
     fontSize: 18,
