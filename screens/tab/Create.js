@@ -85,9 +85,9 @@ export default function CreateScreen({ navigation }) {
     setPhoto(photo.uri);
   };
 
-  const sendPhoto = () => {
-    uploadPosts();
-    navigation.navigate('DefaultScreen', { photo });
+  const sendPhoto = async () => {
+    await uploadPosts();
+    await navigation.navigate('DefaultScreen', { photo });
     setTitle('');
   };
 

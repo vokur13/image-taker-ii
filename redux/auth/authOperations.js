@@ -6,11 +6,11 @@ import {
   updateProfile,
   signOut,
 } from 'firebase/auth';
-import { app } from '../../firebase/config';
+import { app, auth } from '../../firebase/config';
 
 import { updateUserProfile, authStateChange, authLogout } from './authReducer';
 
-const auth = getAuth(app);
+// const auth = getAuth(app);
 
 export const authSignUp =
   ({ nickname, email, password }) =>
