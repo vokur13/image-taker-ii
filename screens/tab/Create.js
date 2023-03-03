@@ -107,7 +107,7 @@ export default function CreateScreen({ navigation }) {
       });
       console.log('Document written with ID: ', docRef.id);
     } catch (e) {
-      console.error('Error adding document: ', e);
+      console.error('Error adding document: ', e.message);
     }
   };
 
@@ -135,7 +135,11 @@ export default function CreateScreen({ navigation }) {
           <View style={styles.imageContainer}>
             <Image
               source={{ uri: photo }}
-              style={{ height: 200, width: 200, borderRadius: 10 }}
+              style={{
+                height: 200,
+                width: 200,
+                borderRadius: 10,
+              }}
             />
           </View>
         )}
@@ -146,7 +150,7 @@ export default function CreateScreen({ navigation }) {
       <View style={styles.inputContainer}>
         <TextInput style={styles.inputText} onChangeText={setTitle} />
       </View>
-      <View>
+      <View style={styles.sendButtonContainer}>
         <TouchableOpacity style={styles.sendButton} onPress={sendPhoto}>
           <Text style={styles.sendText}>Send</Text>
         </TouchableOpacity>
@@ -163,17 +167,21 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     alignItems: 'center',
     // margin: '1%',
+    marginHorizontal: 'auto',
   },
   camera: {
-    // flex: 1,
-    height: '70%',
-    marginTop: '10%',
+    flex: 1,
+    // height: '70%',
+    // marginTop: '10%',
     // position: 'relative',
-    marginHorizontal: '1%',
+    // marginHorizontal: '1%',
     alignItems: 'center',
-    justifyContent: 'flex-end',
-    borderRadius: '12%',
+    // justifyContent: 'flex-end',
+    borderRadius: '8%',
     width: '100%',
+    backgroundColor: 'blue',
+    borderColor: 'red',
+    borderWidth: 1,
   },
   button: {
     position: 'absolute',
@@ -192,12 +200,18 @@ const styles = StyleSheet.create({
     fontSize: '15%',
   },
   imageContainer: {
-    position: 'absolute',
-    top: 50,
-    left: 10,
+    // position: 'absolute',
+    // top: 50,
+    // left: 10,
     borderColor: '#fff',
     borderWidth: 1,
     borderRadius: 10,
+    width: '90%',
+    height: '50%',
+    justifyContent: 'flex-end',
+    // justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '7%',
   },
   inputContainer: {
     width: '100%',
@@ -209,13 +223,17 @@ const styles = StyleSheet.create({
     height: 50,
     fontSize: '20%',
   },
+  sendButtonContainer: {
+    width: '100%',
+    alignItems: 'center',
+  },
   sendButton: {
     // marginHorizontal: 30,
     height: 40,
     borderWidth: 2,
     borderColor: '#dc143c',
     borderRadius: 8,
-    marginTop: 20,
+    marginTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
     width: '98%',
@@ -223,5 +241,6 @@ const styles = StyleSheet.create({
   sendText: {
     color: '#dc143c',
     fontSize: '20',
+    // marginHorizontal: 'auto',
   },
 });

@@ -18,7 +18,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSAppTransportSecurity": 
+          {"NSAllowsArbitraryLoads": true},
+            "NSCameraUsageDescription": "This app uses the camera to scan barcodes on event tickets.",
+            "NSPhotoLibraryAddUsageDescription":"Give Expo experiences permission to save photos",
+            "NSPhotoLibraryUsageDescription":"Give Expo experiences permission to access your photos"
+      }
     },
     "android": {
       "adaptiveIcon": {
