@@ -22,7 +22,7 @@ SplashScreen.preventAutoHideAsync();
 
 import { authLogin } from '../../redux/auth/authOperations';
 
-const image = require('../../assets/images/IMG_3764.jpeg');
+const image = require('../../assets/images/IMG_2941.jpeg');
 const windowDimensions = Dimensions.get('window');
 const initialState = {
   email: '',
