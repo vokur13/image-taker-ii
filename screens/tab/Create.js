@@ -2,12 +2,10 @@ import { Camera, CameraType } from 'expo-camera';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
-  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  StatusBar,
   Image,
   TextInput,
 } from 'react-native';
