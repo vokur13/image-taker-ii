@@ -11,6 +11,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+
 import { app } from '../../firebase/config';
 import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
 const db = getFirestore(app);
@@ -43,26 +47,31 @@ export default function PostsDefaultScreen({ navigation }) {
               style={styles.postsImage}
             />
             <View>
-              <Text>{item.title ? item.title : 'No title'}</Text>
+              <Text style={styles.title}>
+                {item.title ? item.title : 'No title'}
+              </Text>
             </View>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
-                style={styles.button}
+                style={[styles.button]}
                 // title="go to Map"
                 onPress={() =>
                   navigation.navigate('Map', { location: item.location })
                 }
               >
-                <Text style={styles.buttonText}>Map</Text>
+                {/* <Text style={[styles.buttonText]}>Map</Text> */}
+                <FontAwesome5 name="map-marked-alt" size={24} color="#a9a9a9" />
               </TouchableOpacity>
+
               <TouchableOpacity
-                style={styles.button}
+                style={[styles.button]}
                 // title="go to Comments"
                 onPress={() =>
                   navigation.navigate('Comments', { postId: item.id })
                 }
               >
-                <Text style={styles.buttonText}>Comments</Text>
+                {/* <Text style={[styles.buttonText]}>Comments</Text> */}
+                <FontAwesome name="comments-o" size={24} color="#a9a9a9" />
               </TouchableOpacity>
             </View>
           </View>
@@ -82,14 +91,18 @@ const styles = StyleSheet.create({
   },
   flatList: {
     flex: 1,
-    // backgroundColor: 'yellow',
+    backgroundColor: '#808080',
   },
   postsImageContainer: {
     padding: '1%',
-    backgroundColor: '#1e90ff',
-    marginBottom: 1,
+    backgroundColor: 'white',
+    marginBottom: '1%',
     justifyContent: 'center',
     alignItems: 'center',
+    // borderColor: 'red',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingBottom: '1.5%',
   },
   postsImage: {
     // height: 150,
@@ -97,19 +110,22 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 8,
   },
+  title: {
+    fontSize: '18%',
+  },
   buttonContainer: {
     flexDirection: 'row',
   },
   button: {
     flex: 1,
     alignItems: 'center',
-    // backgroundColor: '#DDDDDD',
-    padding: 10,
-    // width: '100%',
-    borderColor: 'red',
-    borderWidth: 1,
+    padding: '1%',
+    // borderColor: 'red',
+    // borderWidth: 1,
     marginHorizontal: 1,
+    borderRadius: 8,
   },
+
   buttonText: {
     color: 'red',
   },
