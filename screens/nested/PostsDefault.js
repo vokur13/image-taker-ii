@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react';
 import {
-  SafeAreaView,
   View,
   StyleSheet,
-  StatusBar,
   FlatList,
   Image,
-  Button,
   Text,
   TouchableOpacity,
 } from 'react-native';
 
-// import Ionicons from '@expo/vector-icons/Ionicons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -36,63 +32,48 @@ export default function PostsDefaultScreen({ navigation }) {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        style={styles.flatList}
-        data={posts}
-        renderItem={({ item }) => (
-          <View style={styles.postsImageContainer}>
-            <Image
-              source={{ uri: item.downloadURL }}
-              style={styles.postsImage}
-            />
-            <View>
-              <Text style={styles.title}>
-                {item.title ? item.title : 'No title'}
-              </Text>
-            </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={[styles.button]}
-                // title="go to Map"
-                onPress={() =>
-                  navigation.navigate('Map', { location: item.location })
-                }
-              >
-                {/* <Text style={[styles.buttonText]}>Map</Text> */}
-                <FontAwesome5
-                  name="map-marked-alt"
-                  size={'27%'}
-                  color="#a9a9a9"
-                />
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[styles.button]}
-                // title="go to Comments"
-                onPress={() =>
-                  navigation.navigate('Comments', { postId: item.id })
-                }
-              >
-                {/* <Text style={[styles.buttonText]}>Comments</Text> */}
-                <FontAwesome name="comments-o" size={'27%'} color="#a9a9a9" />
-              </TouchableOpacity>
-            </View>
+    <FlatList
+      style={styles.flatList}
+      data={posts}
+      renderItem={({ item }) => (
+        <View style={styles.postsImageContainer}>
+          <Image source={{ uri: item.downloadURL }} style={styles.postsImage} />
+          <View>
+            <Text style={styles.title}>
+              {item.title ? item.title : 'No title'}
+            </Text>
           </View>
-        )}
-        keyExtractor={(item) => item.id.toString()}
-      />
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={[styles.button]}
+              onPress={() =>
+                navigation.navigate('Map', { location: item.location })
+              }
+            >
+              <FontAwesome5
+                name="map-marked-alt"
+                size={'27%'}
+                color="#a9a9a9"
+              />
+            </TouchableOpacity>
 
-      <StatusBar style="auto" />
-    </SafeAreaView>
+            <TouchableOpacity
+              style={[styles.button]}
+              onPress={() =>
+                navigation.navigate('Comments', { postId: item.id })
+              }
+            >
+              <FontAwesome name="comments-o" size={'27%'} color="#a9a9a9" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+      keyExtractor={(item) => item.id.toString()}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
   flatList: {
     flex: 1,
     backgroundColor: '#808080',

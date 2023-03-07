@@ -27,6 +27,9 @@ export default function App() {
         // Pre-load fonts, make any API calls you need to do here
         await Font.loadAsync({
           'DMMono-Regular': require('./assets//fonts/DMMono-Regular.ttf'),
+          'DMMono-Medium': require('./assets//fonts/DMMono-Medium.ttf'),
+          'DMMono-Italic': require('./assets//fonts/DMMono-Italic.ttf'),
+          'DMMono-LightItalic': require('./assets//fonts/DMMono-LightItalic.ttf'),
         });
       } catch (e) {
         console.warn(e);
@@ -58,6 +61,7 @@ export default function App() {
     <Provider store={store}>
       <SafeAreaView onLayout={onLayoutRootView} style={styles.container}>
         <AppHub />
+        <StatusBar style="auto" />
       </SafeAreaView>
     </Provider>
   );
@@ -66,6 +70,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
     marginTop: StatusBar.currentHeight || 0,
   },
 });

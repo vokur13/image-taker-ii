@@ -13,6 +13,8 @@ import {
 } from 'react-native';
 import * as Location from 'expo-location';
 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import { app } from '../../firebase/config';
 import { uploadData } from '../../firebase/uploadBytesResumable';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -129,7 +131,8 @@ export default function CreateScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    // <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Camera style={styles.camera} ref={setCamera}>
         {photo && (
           <View style={styles.imageContainer}>
@@ -148,15 +151,32 @@ export default function CreateScreen({ navigation }) {
         </TouchableOpacity>
       </Camera>
       <View style={styles.inputContainer}>
-        <TextInput style={styles.inputText} onChangeText={setTitle} />
+        <TextInput
+          style={styles.inputText}
+          onChangeText={setTitle}
+          placeholder="Type title here"
+        />
       </View>
-      <View style={styles.sendButtonContainer}>
-        <TouchableOpacity style={styles.sendButton} onPress={sendPhoto}>
-          <Text style={styles.sendText}>Send</Text>
-        </TouchableOpacity>
+      <View
+        style={[styles.sendButtonContainer, { backgroundColor: '#e0e0e0' }]}
+      >
+        <View style={[styles.sendButton, styles.neuButtonSecondShadow]}>
+          <TouchableOpacity
+            style={[styles.sendButton, styles.neuButton]}
+            onPress={sendPhoto}
+          >
+            <MaterialCommunityIcons
+              name="email-send-outline"
+              size={'48%'}
+              color="#696969"
+            />
+          </TouchableOpacity>
+        </View>
       </View>
-      <StatusBar style="auto" />
-    </SafeAreaView>
+    </View>
+
+    // <StatusBar style="auto" />
+    // </SafeAreaView>
   );
 }
 
@@ -166,8 +186,10 @@ const styles = StyleSheet.create({
     width: '100%',
     // justifyContent: 'center',
     alignItems: 'center',
+
     // margin: '1%',
     marginHorizontal: 'auto',
+    backgroundColor: '#e0e0e0',
   },
   camera: {
     flex: 1,
@@ -214,33 +236,88 @@ const styles = StyleSheet.create({
     marginTop: '7%',
   },
   inputContainer: {
-    width: '100%',
-    borderColor: 'red',
-    borderWidth: 1,
-    borderRadius: 4,
+    width: '98%',
+    // borderColor: 'red',
+    // borderWidth: 1,
+    borderRadius: 6,
+    paddingHorizontal: '1%',
+    backgroundColor: 'white',
+    // marginHorizontal: '2%',
+    // alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '1%',
   },
   inputText: {
-    height: 50,
+    // height: '10%',
     fontSize: '20%',
+    fontFamily: 'DMMono-Regular',
+    paddingVertical: '4%',
   },
+  // segment: {
+  //   flex: 1,
+  //   width: '100%',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
   sendButtonContainer: {
+    // width: '100%',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+
+    // flex: 1,
     width: '100%',
     alignItems: 'center',
+    justifyContent: 'center',
+    height: '20%',
   },
   sendButton: {
     // marginHorizontal: 30,
-    height: 40,
-    borderWidth: 2,
-    borderColor: '#dc143c',
-    borderRadius: 8,
-    marginTop: 10,
-    justifyContent: 'center',
+    // height: 40,
+    // borderWidth: 1,
+    // borderColor: '#dc143c',
+    // borderRadius: 8,
+    // marginTop: 10,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // width: '100%',
+
+    width: 200,
+    height: 70,
+    marginTop: 50,
+    marginBottom: 50,
     alignItems: 'center',
-    width: '98%',
+    justifyContent: 'center',
   },
-  sendText: {
-    color: '#dc143c',
-    fontSize: '20',
-    // marginHorizontal: 'auto',
+  neuButton: {
+    backgroundColor: '#e0e0e0',
+    borderRadius: 30,
+    shadowColor: '#bebebe',
+    shadowOffset: {
+      width: 20,
+      height: 20,
+    },
+    shadowOpacity: 0.9,
+    shadowRadius: 30,
+    elevation: 12,
   },
+  neuButtonSecondShadow: {
+    position: 'absolute',
+    backgroundColor: '#e0e0e0',
+    width: 200,
+    height: 70,
+    borderRadius: 30,
+    shadowColor: '#ffffff',
+    shadowOffset: {
+      width: -20,
+      height: -20,
+    },
+    shadowOpacity: 1.0,
+    shadowRadius: 30,
+    elevation: 12,
+  },
+  // sendText: {
+  //   color: '#dc143c',
+  //   fontSize: '20',
+  //   marginHorizontal: 'auto',
+  // },
 });
