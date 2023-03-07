@@ -8,6 +8,9 @@ import {
   View,
   Image,
   TextInput,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import * as Location from 'expo-location';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -87,6 +90,7 @@ export default function CreateScreen({ navigation }) {
     await uploadPosts();
     await navigation.navigate('DefaultScreen', { photo });
     setTitle('');
+    Keyboard.dismiss();
   };
 
   const uploadPosts = async () => {
@@ -127,7 +131,10 @@ export default function CreateScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       <Camera style={styles.camera} ref={setCamera}>
         {photo && (
           <View style={styles.imageContainer}>
@@ -182,7 +189,7 @@ export default function CreateScreen({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

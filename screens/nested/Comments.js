@@ -6,10 +6,16 @@ import {
   View,
   Text,
   StyleSheet,
+  SafeAreaView,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import { Shadow } from 'react-native-shadow-2';
+
+import { MaterialIcons } from '@expo/vector-icons';
 
 import {
   collection,
@@ -25,6 +31,7 @@ const CommentsScreen = ({ route }) => {
   const [comments, setComments] = useState('');
   const [allComments, setAllComments] = useState([]);
   const { nickname } = useSelector((state) => state.auth);
+  const [onKeyboardShown, setOnKeyboardShown] = useState(false);
 
   useEffect(() => {
     getAllPosts();
@@ -71,109 +78,127 @@ const CommentsScreen = ({ route }) => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      Keyboard.dismiss();
+      setOnKeyboardShown(false);
     }
   };
 
+  const handleKeyboard = () => {
+    Keyboard.dismiss();
+    setOnKeyboardShown(false);
+  };
+
   return (
-    <>
-      <View style={styles.commentListContainer}>
-        <FlatList
-          data={allComments}
-          renderItem={({ item }) => (
-            <Shadow style={styles.commentShadow} offset={[3, 4]}>
-              <View style={styles.commentContainer}>
-                <Text style={styles.postNickname}>{item.nickname}</Text>
-                <Text style={styles.postText}>{item.comments}</Text>
-              </View>
-            </Shadow>
-          )}
-          keyExtractor={(item) => item.id.toString()}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.inputText}
-          onChangeText={setComments}
-          placeholder="Type here"
-        />
-      </View>
-      <View style={[styles.buttonContainer, { backgroundColor: '#e0e0e0' }]}>
-        <View style={[styles.sendButton, styles.neuButtonSecondShadow]}>
-          <TouchableOpacity
-            style={[styles.sendButton, styles.neuButton]}
-            onPress={createPost}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={handleKeyboard}>
+        <SafeAreaView style={styles.safeView}>
+          <View style={styles.commentListContainer}>
+            <FlatList
+              data={allComments}
+              renderItem={({ item }) => (
+                // <Shadow style={styles.commentShadow} offset={[3, 4]}>
+                <View style={styles.commentContainer}>
+                  <Text style={styles.postNickname}>{item.nickname}</Text>
+                  <Text style={styles.postText}>{item.comments}</Text>
+                </View>
+                // </Shadow>
+              )}
+              keyExtractor={(item) => item.id.toString()}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputText}
+              onChangeText={setComments}
+              placeholder="Type comment here"
+              onFocus={() => {
+                setOnKeyboardShown(true);
+              }}
+            />
+          </View>
+          <View
+            style={[
+              styles.buttonContainer,
+              {
+                backgroundColor: '#e0e0e0',
+                marginBottom: onKeyboardShown ? '15%' : null,
+              },
+            ]}
           >
-            <Text style={styles.sendText}>Add Post</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </>
+            <View style={[styles.sendButton, styles.neuButtonSecondShadow]}>
+              <TouchableOpacity
+                style={[styles.sendButton, styles.neuButton]}
+                onPress={createPost}
+              >
+                <MaterialIcons
+                  name="add-comment"
+                  size={'36%'}
+                  color="#808080"
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#e0e0e0',
+  },
+  safeView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  },
   commentListContainer: {
     flex: 1,
-    marginHorizontal: '2%',
+    width: '100%',
+    paddingHorizontal: '1%',
   },
   commentShadow: {
     width: '100%',
     marginBottom: '2%',
   },
   commentContainer: {
-    // borderWidth: 1,
-    // borderColor: '#dc143c',
-    // marginBottom: '2%',
-    paddingHorizontal: '0.5%',
+    padding: 2,
     backgroundColor: 'white',
-    borderRadius: 4,
+    borderRadius: 6,
+    marginBottom: 1,
+    width: '100%',
   },
   inputContainer: {
-    // flex: 1,
     width: '100%',
-    // borderColor: 'red',
-    // borderWidth: 1,
-    // borderRadius: 4,
+
+    borderRadius: 6,
     backgroundColor: 'white',
     paddingHorizontal: '1%',
-    paddingVertical: '2%',
+    paddingVertical: '3%',
+    marginHorizontal: '1%',
   },
   inputText: {
-    // height: 50,
     fontSize: '20%',
-    // color: 'black',
-    // backgroundColor: 'pink',
+
     fontFamily: 'DMMono-Regular',
   },
-  // segment: {
-  //   flex: 1,
-  //   width: '100%',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
   buttonContainer: {
-    // backgroundColor: 'yellow',
-    // justifyContent: 'center',
-    // alignItems: 'center',
-
-    // flex: 1,
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     height: '20%',
+    // marginBottom: 30,
   },
   sendButton: {
-    // marginHorizontal: 30,
-    // height: 40,
-    // borderWidth: 1,
-    // borderColor: '#dc143c',
-    // borderRadius: 8,
-    // marginTop: 20,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // width: '98%',
-    // marginBottom: 30,
-
     width: 200,
     height: 70,
     marginTop: 50,
@@ -209,7 +234,6 @@ const styles = StyleSheet.create({
     elevation: 12,
   },
   sendText: {
-    // color: '#dc143c',
     fontSize: '21%',
     fontFamily: 'DMMono-Regular',
   },

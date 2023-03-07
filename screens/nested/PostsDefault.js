@@ -63,7 +63,7 @@ export default function PostsDefaultScreen({ navigation }) {
                 navigation.navigate('Comments', { postId: item.id })
               }
             >
-              <FontAwesome name="comments-o" size={'27%'} color="#a9a9a9" />
+              <FontAwesome name="comments-o" size={'32%'} color="#a9a9a9" />
             </TouchableOpacity>
           </View>
         </View>
@@ -84,13 +84,11 @@ const styles = StyleSheet.create({
     marginBottom: '1%',
     justifyContent: 'center',
     alignItems: 'center',
-    // borderColor: 'red',
-    borderWidth: 1,
+
     borderRadius: 8,
     paddingBottom: '1.5%',
   },
   postsImage: {
-    // height: 150,
     height: 250,
     width: '100%',
     borderRadius: 8,
@@ -99,6 +97,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: '18%',
     fontFamily: 'DMMono-Regular',
+    marginTop: '2%',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -107,8 +106,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: '1%',
-    // borderColor: 'red',
-    // borderWidth: 1,
     marginHorizontal: 1,
     borderRadius: 8,
   },
