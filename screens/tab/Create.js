@@ -80,11 +80,7 @@ export default function CreateScreen({ navigation }) {
   const takePhoto = async () => {
     const photo = await camera.takePictureAsync();
     let location = await Location.getCurrentPositionAsync({});
-    // console.log(
-    //   'location',
-    //   location.coords.latitude,
-    //   location.coords.longitude
-    // );
+
     setLocation(location);
     setPhoto(photo.uri);
   };
@@ -133,7 +129,6 @@ export default function CreateScreen({ navigation }) {
   };
 
   return (
-    // <SafeAreaView style={styles.container}>
     <View style={styles.container}>
       <Camera style={styles.camera} ref={setCamera}>
         {photo && (
@@ -154,17 +149,14 @@ export default function CreateScreen({ navigation }) {
             onPress={takePhoto}
           >
             <LinearGradient
-              // Background Linear Gradient
               colors={['#F93a3a', '#BA0E0E']}
               style={styles.skeuomorphicShift}
             />
             <LinearGradient
-              // Background Linear Gradient
               colors={['#BA0E0E', '#F93a3a']}
               style={styles.skeumorphicGradientStyling}
             >
-              {/* <Text style={styles.text}>Snap</Text> */}
-              <MaterialIcons name="add-a-photo" size={'36%'} color="#d3d3d3" />
+              <MaterialIcons name="add-a-photo" size={'40%'} color="#d3d3d3" />
             </LinearGradient>
           </TouchableOpacity>
         </View>
@@ -193,9 +185,6 @@ export default function CreateScreen({ navigation }) {
         </View>
       </View>
     </View>
-
-    // <StatusBar style="auto" />
-    // </SafeAreaView>
   );
 }
 
@@ -205,25 +194,13 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    // marginHorizontal: '1%',
-
-    // margin: '1%',
-    // marginHorizontal: 'auto',
     backgroundColor: '#e0e0e0',
   },
   camera: {
     flex: 1,
-    // height: '70%',
-    // marginTop: '10%',
-    // position: 'relative',
-    // marginHorizontal: '1%',
     alignItems: 'center',
-    // justifyContent: 'flex-end',
     borderRadius: '8%',
     width: '100%',
-    // backgroundColor: 'blue',
-    // borderColor: 'red',
-    // borderWidth: 1,
   },
   segment: {
     flex: 1,
@@ -234,15 +211,6 @@ const styles = StyleSheet.create({
   button: {
     position: 'absolute',
     bottom: '4%',
-    // width: 75,
-    // height: 75,
-    // paddingVertical: 10,
-    // paddingHorizontal: 20,
-    // borderRadius: '50%',
-    // backgroundColor: '#dc143c',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-
     width: 200,
     height: 70,
     marginTop: 50,
@@ -285,65 +253,35 @@ const styles = StyleSheet.create({
     fontSize: '15%',
   },
   imageContainer: {
-    // position: 'absolute',
-    // top: 50,
-    // left: 10,
     borderColor: '#fff',
     borderWidth: 1,
     borderRadius: 10,
     width: '90%',
     height: '50%',
     justifyContent: 'flex-end',
-    // justifyContent: 'center',
     alignItems: 'center',
     marginTop: '7%',
   },
   inputContainer: {
     width: '98%',
-    // borderColor: 'red',
-    // borderWidth: 1,
     borderRadius: 6,
     paddingHorizontal: '1%',
     backgroundColor: 'white',
-    // marginHorizontal: '2%',
-    // alignItems: 'center',
     justifyContent: 'center',
     marginTop: '1.5%',
   },
   inputText: {
-    // height: '10%',
     fontSize: '20%',
     fontFamily: 'DMMono-Regular',
     paddingVertical: '4%',
   },
-  // segment: {
-  //   flex: 1,
-  //   width: '100%',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
   sendButtonContainer: {
-    // width: '100%',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-
-    // flex: 1,
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     height: '20%',
   },
   sendButton: {
-    // marginHorizontal: 30,
-    // height: 40,
-    // borderWidth: 1,
-    // borderColor: '#dc143c',
-    // borderRadius: 8,
-    // marginTop: 10,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // width: '100%',
-
     width: 200,
     height: 70,
     marginTop: 50,
@@ -378,9 +316,4 @@ const styles = StyleSheet.create({
     shadowRadius: 30,
     elevation: 12,
   },
-  // sendText: {
-  //   color: '#dc143c',
-  //   fontSize: '20',
-  //   marginHorizontal: 'auto',
-  // },
 });
