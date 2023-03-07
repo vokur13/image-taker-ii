@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   StyleSheet,
@@ -13,11 +13,6 @@ import {
   Keyboard,
   Dimensions,
 } from 'react-native';
-
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-
-SplashScreen.preventAutoHideAsync();
 
 import { authSignUp } from '../../redux/auth/authOperations';
 
@@ -47,20 +42,6 @@ export default function Register({ navigation }) {
     return () => subscription?.remove();
   });
 
-  const [fontsLoaded] = useFonts({
-    'DMMono-Regular': require('../../assets/fonts/DMMono-Regular.ttf'),
-  });
-
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
-  if (!fontsLoaded) {
-    return null;
-  }
-
   const handleSubmit = () => {
     setOnKeyboardShown(false);
     Keyboard.dismiss();
@@ -69,7 +50,7 @@ export default function Register({ navigation }) {
   };
 
   return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
+    <View style={styles.container}>
       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

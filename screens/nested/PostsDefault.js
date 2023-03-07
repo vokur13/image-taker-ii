@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: '18%',
+    fontFamily: 'DMMono-Regular',
   },
   buttonContainer: {
     flexDirection: 'row',
