@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import Ionicons from '@expo/vector-icons/Ionicons';
+// import Ionicons from '@expo/vector-icons/Ionicons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -60,7 +60,11 @@ export default function PostsDefaultScreen({ navigation }) {
                 }
               >
                 {/* <Text style={[styles.buttonText]}>Map</Text> */}
-                <FontAwesome5 name="map-marked-alt" size={24} color="#a9a9a9" />
+                <FontAwesome5
+                  name="map-marked-alt"
+                  size={'27%'}
+                  color="#a9a9a9"
+                />
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -71,7 +75,7 @@ export default function PostsDefaultScreen({ navigation }) {
                 }
               >
                 {/* <Text style={[styles.buttonText]}>Comments</Text> */}
-                <FontAwesome name="comments-o" size={24} color="#a9a9a9" />
+                <FontAwesome name="comments-o" size={'27%'} color="#a9a9a9" />
               </TouchableOpacity>
             </View>
           </View>
@@ -109,6 +113,7 @@ const styles = StyleSheet.create({
     height: 250,
     width: '100%',
     borderRadius: 8,
+    marginBottom: '1%',
   },
   title: {
     fontSize: '18%',
