@@ -12,8 +12,10 @@ import {
   TextInput,
 } from 'react-native';
 import * as Location from 'expo-location';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import { app } from '../../firebase/config';
 import { uploadData } from '../../firebase/uploadBytesResumable';
@@ -146,9 +148,26 @@ export default function CreateScreen({ navigation }) {
             />
           </View>
         )}
-        <TouchableOpacity style={styles.button} onPress={takePhoto}>
-          <Text style={styles.text}>Snap</Text>
-        </TouchableOpacity>
+        <View style={[styles.segment]}>
+          <TouchableOpacity
+            style={[styles.button, styles.skeuomorphicButton]}
+            onPress={takePhoto}
+          >
+            <LinearGradient
+              // Background Linear Gradient
+              colors={['#F93a3a', '#BA0E0E']}
+              style={styles.skeuomorphicShift}
+            />
+            <LinearGradient
+              // Background Linear Gradient
+              colors={['#BA0E0E', '#F93a3a']}
+              style={styles.skeumorphicGradientStyling}
+            >
+              {/* <Text style={styles.text}>Snap</Text> */}
+              <MaterialIcons name="add-a-photo" size={'36%'} color="#d3d3d3" />
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
       </Camera>
       <View style={styles.inputContainer}>
         <TextInput
@@ -184,11 +203,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    // justifyContent: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
+    // marginHorizontal: '1%',
 
     // margin: '1%',
-    marginHorizontal: 'auto',
+    // marginHorizontal: 'auto',
     backgroundColor: '#e0e0e0',
   },
   camera: {
@@ -201,21 +221,64 @@ const styles = StyleSheet.create({
     // justifyContent: 'flex-end',
     borderRadius: '8%',
     width: '100%',
-    backgroundColor: 'blue',
-    borderColor: 'red',
-    borderWidth: 1,
+    // backgroundColor: 'blue',
+    // borderColor: 'red',
+    // borderWidth: 1,
+  },
+  segment: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   button: {
     position: 'absolute',
     bottom: '4%',
-    width: 75,
-    height: 75,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: '50%',
-    backgroundColor: '#dc143c',
+    // width: 75,
+    // height: 75,
+    // paddingVertical: 10,
+    // paddingHorizontal: 20,
+    // borderRadius: '50%',
+    // backgroundColor: '#dc143c',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+
+    width: 200,
+    height: 70,
+    marginTop: 50,
+    marginBottom: 50,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  skeuomorphicButton: {
+    height: 75,
+    backgroundColor: 'red',
+    padding: 5,
+    borderRadius: 37.5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 7,
+    },
+    shadowOpacity: 0.41,
+    shadowRadius: 9.11,
+    elevation: 14,
+  },
+  skeumorphicGradientStyling: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  skeuomorphicShift: {
+    position: 'absolute',
+    width: 200,
+    height: 75,
+    top: 0,
+    left: 0,
+    zIndex: -1,
+    borderRadius: 37.5,
   },
   text: {
     color: '#fff',
@@ -245,7 +308,7 @@ const styles = StyleSheet.create({
     // marginHorizontal: '2%',
     // alignItems: 'center',
     justifyContent: 'center',
-    marginTop: '1%',
+    marginTop: '1.5%',
   },
   inputText: {
     // height: '10%',
