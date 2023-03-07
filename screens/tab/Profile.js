@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import {
-  SafeAreaView,
   View,
   Text,
   StyleSheet,
@@ -8,7 +7,9 @@ import {
   Button,
   FlatList,
   Image,
+  TouchableOpacity,
 } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { authSignOut } from '../../redux/auth/authOperations';
 
@@ -42,7 +43,7 @@ export default function ProfileScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <FlatList
         style={styles.flatList}
         data={userPosts}
@@ -53,15 +54,18 @@ export default function ProfileScreen() {
               style={styles.postsImage}
             />
             <View>
-              <Text>{item.title}</Text>
+              <Text style={styles.title}>{item.title}</Text>
             </View>
           </View>
         )}
         keyExtractor={(item) => item.id.toString()}
       />
-      <Button title="SignOut" onPress={logOut} />
-      <StatusBar style="auto" />
-    </SafeAreaView>
+      <TouchableOpacity style={styles.button} onPress={logOut}>
+        {/* <AntDesign name="logout" size={'42%'} color="#808080" /> */}
+        <AntDesign name="logout" size={'36%'} color="red" />
+      </TouchableOpacity>
+      {/* <Button title="SignOut" onPress={logOut} /> */}
+    </View>
   );
 }
 
@@ -69,21 +73,42 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
+    // marginHorizontal: '0.5%',
+    backgroundColor: '#d3d3d3',
   },
   flatList: {
     flex: 1,
-    backgroundColor: 'yellow',
+    // backgroundColor: 'yellow',
   },
   postsImageContainer: {
     padding: '1%',
-    backgroundColor: 'green',
+    backgroundColor: 'white',
     marginBottom: '1%',
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 6,
+    marginHorizontal: '1%',
+    // height: '35%',
   },
   postsImage: {
-    height: 150,
+    height: 250,
     width: '100%',
-    borderRadius: 8,
+    borderRadius: 6,
+  },
+  title: {
+    fontFamily: 'DMMono-Regular',
+    fontSize: '18%',
+    marginVertical: '1%',
+  },
+  button: {
+    borderColor: 'red',
+    borderWidth: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: '1%',
+    backgroundColor: 'white',
+    borderRadius: 70,
+    paddingVertical: '3%',
+    marginHorizontal: '2%',
   },
 });
