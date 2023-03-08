@@ -96,6 +96,7 @@ export default function CreateScreen({ navigation }) {
     } finally {
       Keyboard.dismiss();
       setOnKeyboardShown(false);
+      setTitle('');
     }
   };
 
@@ -176,6 +177,7 @@ export default function CreateScreen({ navigation }) {
         <TextInput
           style={styles.inputText}
           onChangeText={setTitle}
+          value={title}
           placeholder="Type title here"
           onFocus={() => {
             setOnKeyboardShown(true);

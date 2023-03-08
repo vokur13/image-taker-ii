@@ -81,6 +81,7 @@ const CommentsScreen = ({ route }) => {
     } finally {
       Keyboard.dismiss();
       setOnKeyboardShown(false);
+      setComments('');
     }
   };
 
@@ -119,6 +120,7 @@ const CommentsScreen = ({ route }) => {
           onFocus={() => {
             setOnKeyboardShown(true);
           }}
+          value={comments}
         />
       </View>
       <View
