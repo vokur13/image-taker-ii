@@ -62,7 +62,7 @@ export default function ProfileScreen() {
       />
       <TouchableOpacity style={styles.button} onPress={logOut}>
         {/* <AntDesign name="logout" size={'42%'} color="#808080" /> */}
-        <AntDesign name="logout" size={'36%'} color="red" />
+        <AntDesign name="logout" size={'36%'} color="white" />
       </TouchableOpacity>
       {/* <Button title="SignOut" onPress={logOut} /> */}
     </View>
@@ -108,8 +108,9 @@ const styles = StyleSheet.create({
     marginVertical: '1%',
     backgroundColor: 'white',
     borderRadius: 70,
+    borderColor: 'white',
     paddingVertical: '3%',
-    marginHorizontal: '2%',
-    // backgroundColor: 'transparent',
+    marginHorizontal: '1%',
+    backgroundColor: 'red',
   },
 });

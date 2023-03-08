@@ -45,6 +45,7 @@ export default function CreateScreen({ navigation }) {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState(null);
   const [title, setTitle] = useState('');
+  const [onKeyboardShown, setOnKeyboardShown] = useState(false);
 
   const { userId, nickname } = useSelector((state) => state.auth);
 
@@ -87,10 +88,15 @@ export default function CreateScreen({ navigation }) {
   };
 
   const sendPhoto = async () => {
-    await uploadPosts();
-    await navigation.navigate('DefaultScreen', { photo });
-    setTitle('');
-    Keyboard.dismiss();
+    try {
+      await uploadPosts();
+      await navigation.navigate('DefaultScreen', { photo });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      Keyboard.dismiss();
+      setOnKeyboardShown(false);
+    }
   };
 
   const uploadPosts = async () => {
@@ -171,10 +177,19 @@ export default function CreateScreen({ navigation }) {
           style={styles.inputText}
           onChangeText={setTitle}
           placeholder="Type title here"
+          onFocus={() => {
+            setOnKeyboardShown(true);
+          }}
         />
       </View>
       <View
-        style={[styles.sendButtonContainer, { backgroundColor: '#e0e0e0' }]}
+        style={[
+          styles.sendButtonContainer,
+          {
+            backgroundColor: '#e0e0e0',
+            marginBottom: onKeyboardShown ? '15%' : null,
+          },
+        ]}
       >
         <View style={[styles.sendButton, styles.neuButtonSecondShadow]}>
           <TouchableOpacity
