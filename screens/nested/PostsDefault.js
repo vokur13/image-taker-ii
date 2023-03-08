@@ -76,7 +76,7 @@ export default function PostsDefaultScreen({ navigation }) {
 const styles = StyleSheet.create({
   flatList: {
     flex: 1,
-    backgroundColor: '#808080',
+    backgroundColor: '#d3d3d3',
   },
   postsImageContainer: {
     padding: '1%',

@@ -14,6 +14,8 @@ import {
   Dimensions,
 } from 'react-native';
 
+import { useValidation } from 'react-native-form-validator';
+
 import { authSignUp } from '../../redux/auth/authOperations';
 
 const image = require('../../assets/images/IMG_3764.jpeg');
@@ -31,6 +33,15 @@ export default function Register({ navigation }) {
     window: windowDimensions,
   });
 
+  const { validate, isFieldInError, getErrorsInField, getErrorMessages } =
+    useValidation({
+      state: {
+        nickname: state.nickname,
+        email: state.email,
+        password: state.password,
+      },
+    });
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -43,6 +54,11 @@ export default function Register({ navigation }) {
   });
 
   const handleSubmit = () => {
+    validate({
+      nickname: { minlength: 3, maxlength: 8, required: true },
+      email: { email: true },
+      password: { minlength: 6, required: true },
+    });
     setOnKeyboardShown(false);
     Keyboard.dismiss();
     dispatch(authSignUp(state));
@@ -95,6 +111,10 @@ export default function Register({ navigation }) {
                       }))
                     }
                   />
+                  {isFieldInError('nickname') &&
+                    getErrorsInField('nickname').map((errorMessage) => (
+                      <Text style={{ color: 'red' }}>{errorMessage}</Text>
+                    ))}
                 </View>
                 <View style={[styles.inputContainer, { marginBottom: 20 }]}>
                   <Text style={styles.inputTitle}>E-mail</Text>
@@ -115,6 +135,10 @@ export default function Register({ navigation }) {
                       }))
                     }
                   />
+                  {isFieldInError('email') &&
+                    getErrorsInField('email').map((errorMessage) => (
+                      <Text style={{ color: 'red' }}>{errorMessage}</Text>
+                    ))}
                 </View>
                 <View style={styles.inputContainer}>
                   <Text style={styles.inputTitle}>Password</Text>
@@ -135,6 +159,10 @@ export default function Register({ navigation }) {
                       }))
                     }
                   />
+                  {isFieldInError('password') &&
+                    getErrorsInField('password').map((errorMessage) => (
+                      <Text style={{ color: 'red' }}>{errorMessage}</Text>
+                    ))}
                 </View>
                 <TouchableOpacity
                   style={styles.signUpButton}
@@ -161,6 +189,7 @@ export default function Register({ navigation }) {
                     </Text>
                   </Text>
                 </TouchableOpacity>
+                {/* <Text style={{ color: 'red' }}>{getErrorMessages()}</Text> */}
               </View>
             </SafeAreaView>
           </TouchableWithoutFeedback>
