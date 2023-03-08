@@ -110,5 +110,6 @@ const styles = StyleSheet.create({
     borderRadius: 70,
     paddingVertical: '3%',
     marginHorizontal: '2%',
+    // backgroundColor: 'transparent',
   },
 });
