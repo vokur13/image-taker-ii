@@ -94,56 +94,52 @@ const CommentsScreen = ({ route }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      <TouchableWithoutFeedback onPress={handleKeyboard}>
-        <SafeAreaView style={styles.safeView}>
-          <View style={styles.commentListContainer}>
-            <FlatList
-              data={allComments}
-              renderItem={({ item }) => (
-                // <Shadow style={styles.commentShadow} offset={[3, 4]}>
-                <View style={styles.commentContainer}>
-                  <Text style={styles.postNickname}>{item.nickname}</Text>
-                  <Text style={styles.postText}>{item.comments}</Text>
-                </View>
-                // </Shadow>
-              )}
-              keyExtractor={(item) => item.id.toString()}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputText}
-              onChangeText={setComments}
-              placeholder="Type comment here"
-              onFocus={() => {
-                setOnKeyboardShown(true);
-              }}
-            />
-          </View>
-          <View
-            style={[
-              styles.buttonContainer,
-              {
-                backgroundColor: '#e0e0e0',
-                marginBottom: onKeyboardShown ? '15%' : null,
-              },
-            ]}
-          >
-            <View style={[styles.sendButton, styles.neuButtonSecondShadow]}>
-              <TouchableOpacity
-                style={[styles.sendButton, styles.neuButton]}
-                onPress={createPost}
-              >
-                <MaterialIcons
-                  name="add-comment"
-                  size={'36%'}
-                  color="#808080"
-                />
-              </TouchableOpacity>
+      {/* <TouchableWithoutFeedback onPress={handleKeyboard}> */}
+      {/* <SafeAreaView style={styles.safeView}> */}
+      <View style={styles.commentListContainer}>
+        <FlatList
+          data={allComments}
+          renderItem={({ item }) => (
+            // <Shadow style={styles.commentShadow} offset={[3, 4]}>
+            <View style={styles.commentContainer}>
+              <Text style={styles.postNickname}>{item.nickname}</Text>
+              <Text style={styles.postText}>{item.comments}</Text>
             </View>
-          </View>
-        </SafeAreaView>
-      </TouchableWithoutFeedback>
+            // </Shadow>
+          )}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.inputText}
+          onChangeText={setComments}
+          placeholder="Type comment here"
+          onFocus={() => {
+            setOnKeyboardShown(true);
+          }}
+        />
+      </View>
+      <View
+        style={[
+          styles.buttonContainer,
+          {
+            backgroundColor: '#e0e0e0',
+            marginBottom: onKeyboardShown ? '15%' : null,
+          },
+        ]}
+      >
+        <View style={[styles.sendButton, styles.neuButtonSecondShadow]}>
+          <TouchableOpacity
+            style={[styles.sendButton, styles.neuButton]}
+            onPress={createPost}
+          >
+            <MaterialIcons name="add-comment" size={'32%'} color="#808080" />
+          </TouchableOpacity>
+        </View>
+      </View>
+      {/* </SafeAreaView> */}
+      {/* </TouchableWithoutFeedback> */}
     </KeyboardAvoidingView>
   );
 };
