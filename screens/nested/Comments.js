@@ -94,8 +94,8 @@ const CommentsScreen = ({ route }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      {/* <TouchableWithoutFeedback onPress={handleKeyboard}> */}
       {/* <SafeAreaView style={styles.safeView}> */}
+      {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
       <View style={styles.commentListContainer}>
         <FlatList
           data={allComments}
@@ -110,6 +110,7 @@ const CommentsScreen = ({ route }) => {
           keyExtractor={(item) => item.id.toString()}
         />
       </View>
+      {/* </TouchableWithoutFeedback> */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.inputText}
@@ -139,7 +140,6 @@ const CommentsScreen = ({ route }) => {
         </View>
       </View>
       {/* </SafeAreaView> */}
-      {/* </TouchableWithoutFeedback> */}
     </KeyboardAvoidingView>
   );
 };
