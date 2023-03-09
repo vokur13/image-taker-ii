@@ -27,4 +27,3 @@ export const authSlice = createSlice({
 
 export const { updateUserProfile, authStateChange, authLogout } =
   authSlice.actions;
-// export default authSlice.reducer;

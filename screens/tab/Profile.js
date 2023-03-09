@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   StatusBar,
-  Button,
   FlatList,
   Image,
   TouchableOpacity,
@@ -61,10 +60,8 @@ export default function ProfileScreen() {
         keyExtractor={(item) => item.id.toString()}
       />
       <TouchableOpacity style={styles.button} onPress={logOut}>
-        {/* <AntDesign name="logout" size={'42%'} color="#808080" /> */}
         <AntDesign name="logout" size={'36%'} color="white" />
       </TouchableOpacity>
-      {/* <Button title="SignOut" onPress={logOut} /> */}
     </View>
   );
 }
@@ -73,12 +70,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
-    // marginHorizontal: '0.5%',
+
     backgroundColor: '#d3d3d3',
   },
   flatList: {
     flex: 1,
-    // backgroundColor: 'yellow',
   },
   postsImageContainer: {
     padding: '1%',
@@ -88,7 +84,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 6,
     marginHorizontal: '1%',
-    // height: '35%',
   },
   postsImage: {
     height: 250,

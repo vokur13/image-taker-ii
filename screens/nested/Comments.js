@@ -6,14 +6,11 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
-  TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import { Shadow } from 'react-native-shadow-2';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -95,23 +92,19 @@ const CommentsScreen = ({ route }) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      {/* <SafeAreaView style={styles.safeView}> */}
-      {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
       <View style={styles.commentListContainer}>
         <FlatList
           data={allComments}
           renderItem={({ item }) => (
-            // <Shadow style={styles.commentShadow} offset={[3, 4]}>
             <View style={styles.commentContainer}>
               <Text style={styles.postNickname}>{item.nickname}</Text>
               <Text style={styles.postText}>{item.comments}</Text>
             </View>
-            // </Shadow>
           )}
           keyExtractor={(item) => item.id.toString()}
         />
       </View>
-      {/* </TouchableWithoutFeedback> */}
+
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.inputText}
@@ -141,7 +134,6 @@ const CommentsScreen = ({ route }) => {
           </TouchableOpacity>
         </View>
       </View>
-      {/* </SafeAreaView> */}
     </KeyboardAvoidingView>
   );
 };
@@ -194,7 +186,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: '20%',
-    // marginBottom: 30,
   },
   sendButton: {
     width: 200,

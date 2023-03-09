@@ -1,4 +1,4 @@
-import { Camera, CameraType } from 'expo-camera';
+import { Camera } from 'expo-camera';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -9,7 +9,6 @@ import {
   Image,
   TextInput,
   KeyboardAvoidingView,
-  TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
 import * as Location from 'expo-location';
@@ -19,7 +18,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import { app } from '../../firebase/config';
-import { uploadData } from '../../firebase/uploadBytesResumable';
+// import { uploadData } from '../../firebase/uploadBytesResumable';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import {
   getFirestore,

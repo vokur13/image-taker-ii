@@ -189,7 +189,7 @@ export default function Register({ navigation }) {
                     </Text>
                   </Text>
                 </TouchableOpacity>
-                {/* <Text style={{ color: 'red' }}>{getErrorMessages()}</Text> */}
+                <Text style={{ color: 'red' }}>{getErrorMessages()}</Text>
               </View>
             </SafeAreaView>
           </TouchableWithoutFeedback>
@@ -206,8 +206,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    // flex: 1,
-    // justifyContent: 'center',
     width: '100%',
     height: '100%',
   },
@@ -216,20 +214,19 @@ const styles = StyleSheet.create({
   },
   welcomeTextContainer: {
     flex: 1,
-    // backgroundColor: 'red',
+
     justifyContent: 'center',
     paddingLeft: '10%',
     paddingRight: '10%',
   },
   welcomeText: {
     fontSize: '40%',
-    // fontWeight: 'bold',
+
     fontFamily: 'DMMono-Regular',
   },
   bodyTextContainer: {
-    // backgroundColor: 'yellow',
     paddingTop: '5%',
-    // paddingBottom: '20%',
+
     paddingLeft: '10%',
     paddingRight: '10%',
   },

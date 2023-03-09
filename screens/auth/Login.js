@@ -37,12 +37,12 @@ export default function Login({ navigation }) {
     const subscription = Dimensions.addEventListener('change', ({ window }) => {
       setDimensions({ window });
       const { width } = dimensions.window;
-      console.log('width', width);
+      console.log(width);
     });
     return () => subscription?.remove();
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setOnKeyboardShown(false);
     Keyboard.dismiss();
     dispatch(authLogin(state));
@@ -66,17 +66,6 @@ export default function Login({ navigation }) {
               <View style={styles.welcomeTextContainer}>
                 <Text style={styles.welcomeText}>ImageTaker II</Text>
               </View>
-              {/* <View style={styles.bodyTextContainer}>
-                <Text style={styles.bodyText}>
-                  At social we believe in a new type of interaction.
-                  {'\n'}
-                  {'\n'}
-                  One that crosses the boundaries of what was possible before.
-                  {'\n'}
-                  {'\n'}
-                  Sign up today and check out the future of social networking.
-                </Text>
-              </View> */}
               <View
                 style={[
                   styles.signUpContainer,
@@ -173,18 +162,17 @@ const styles = StyleSheet.create({
   },
   welcomeTextContainer: {
     flex: 1,
-    // backgroundColor: 'red',
+
     justifyContent: 'center',
     paddingLeft: '10%',
     paddingRight: '10%',
   },
   welcomeText: {
     fontSize: '40%',
-    // fontWeight: 'bold',
+
     fontFamily: 'DMMono-Regular',
   },
   bodyTextContainer: {
-    // backgroundColor: 'yellow',
     paddingTop: '5%',
     paddingBottom: '20%',
     paddingLeft: '10%',

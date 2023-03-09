@@ -1,16 +1,13 @@
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
   updateProfile,
   signOut,
 } from 'firebase/auth';
-import { app, auth } from '../../firebase/config';
+import { auth } from '../../firebase/config';
 
 import { updateUserProfile, authStateChange, authLogout } from './authReducer';
-
-// const auth = getAuth(app);
 
 export const authSignUp =
   ({ nickname, email, password }) =>
@@ -48,6 +45,7 @@ export const authLogin =
         password
       );
       const user = userCredential.user;
+      console.log(user);
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
