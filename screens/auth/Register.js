@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: '40%',
-
+    color: 'white',
     fontFamily: 'DMMono-Regular',
   },
   bodyTextContainer: {

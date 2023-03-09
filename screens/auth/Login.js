@@ -163,14 +163,15 @@ const styles = StyleSheet.create({
   welcomeTextContainer: {
     flex: 1,
 
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     paddingLeft: '10%',
     paddingRight: '10%',
   },
   welcomeText: {
     fontSize: '40%',
-
+    color: 'white',
     fontFamily: 'DMMono-Regular',
+    marginTop: '5%',
   },
   bodyTextContainer: {
     paddingTop: '5%',
