@@ -34,33 +34,6 @@ function RegisterScreen({ navigation }) {
   );
 }
 
-// function PostsScreen({ navigation }) {
-//   return (
-//     <View style={styles.container}>
-//       <Posts navigation={navigation} />
-//       <StatusBar style="auto" />
-//     </View>
-//   );
-// }
-
-// function CreateScreen({ navigation }) {
-//   return (
-//     <View style={styles.container}>
-//       <Create navigation={navigation} />
-//       <StatusBar style="auto" />
-//     </View>
-//   );
-// }
-
-// function ProfileScreen({ navigation }) {
-//   return (
-//     <View style={styles.container}>
-//       <Profile navigation={navigation} />
-//       <StatusBar style="auto" />
-//     </View>
-//   );
-// }
-
 export const useRoutes = (isAuth) => {
   if (!isAuth) {
     return (
@@ -79,10 +52,8 @@ export const useRoutes = (isAuth) => {
     );
   } else {
     return (
-      // <Tab.Navigator tabBarOptions={{ showLabel: false }}>
       <Tab.Navigator
         screenOptions={{
-          // tabBarShowLabel: false,
           tabBarStyle: [
             {
               display: 'flex',
