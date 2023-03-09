@@ -75,7 +75,7 @@ export default function Register({ navigation }) {
           <TouchableWithoutFeedback onPress={handleSubmit}>
             <SafeAreaView style={styles.safeView}>
               <View style={styles.welcomeTextContainer}>
-                <Text style={styles.welcomeText}>ImageTaker II</Text>
+                <Text style={styles.welcomeText}>Image Taker</Text>
               </View>
               <View style={styles.bodyTextContainer}>
                 <Text style={styles.bodyText}>
@@ -202,11 +202,9 @@ export default function Register({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: '100%',
   },
   image: {
-    width: '100%',
     height: '100%',
   },
   safeView: {
@@ -214,10 +212,8 @@ const styles = StyleSheet.create({
   },
   welcomeTextContainer: {
     flex: 1,
-
     justifyContent: 'center',
-    paddingLeft: '10%',
-    paddingRight: '10%',
+    alignItems: 'center',
   },
   welcomeText: {
     fontSize: '40%',
@@ -226,9 +222,7 @@ const styles = StyleSheet.create({
   },
   bodyTextContainer: {
     paddingTop: '5%',
-
-    paddingLeft: '10%',
-    paddingRight: '10%',
+    alignItems: 'center',
   },
   bodyText: {
     fontSize: '25%',

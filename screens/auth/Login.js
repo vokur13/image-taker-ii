@@ -64,7 +64,7 @@ export default function Login({ navigation }) {
           <TouchableWithoutFeedback onPress={keyboardHide}>
             <SafeAreaView style={styles.safeView}>
               <View style={styles.welcomeTextContainer}>
-                <Text style={styles.welcomeText}>ImageTaker II</Text>
+                <Text style={styles.welcomeText}>Image Taker</Text>
               </View>
               <View
                 style={[
@@ -148,13 +148,9 @@ export default function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: '100%',
   },
   image: {
-    flex: 1,
-    justifyContent: 'center',
-    width: '100%',
     height: '100%',
   },
   safeView: {
@@ -162,26 +158,14 @@ const styles = StyleSheet.create({
   },
   welcomeTextContainer: {
     flex: 1,
-
     justifyContent: 'flex-start',
-    paddingLeft: '10%',
-    paddingRight: '10%',
+    alignItems: 'center',
   },
   welcomeText: {
     fontSize: '40%',
     color: 'white',
     fontFamily: 'DMMono-Regular',
     marginTop: '5%',
-  },
-  bodyTextContainer: {
-    paddingTop: '5%',
-    paddingBottom: '20%',
-    paddingLeft: '10%',
-    paddingRight: '10%',
-  },
-  bodyText: {
-    fontSize: '15%',
-    fontFamily: 'DMMono-Regular',
   },
   signUpContainer: {
     paddingTop: '10%',
