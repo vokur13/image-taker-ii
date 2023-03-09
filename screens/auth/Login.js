@@ -64,7 +64,7 @@ export default function Login({ navigation }) {
           <TouchableWithoutFeedback onPress={keyboardHide}>
             <SafeAreaView style={styles.safeView}>
               <View style={styles.welcomeTextContainer}>
-                <Text style={styles.welcomeText}>Image Taker</Text>
+                <Text style={styles.welcomeText}>ImageTaker</Text>
               </View>
               <View
                 style={[

@@ -75,7 +75,7 @@ export default function Register({ navigation }) {
           <TouchableWithoutFeedback onPress={handleSubmit}>
             <SafeAreaView style={styles.safeView}>
               <View style={styles.welcomeTextContainer}>
-                <Text style={styles.welcomeText}>Image Taker</Text>
+                <Text style={styles.welcomeText}>ImageTaker</Text>
               </View>
               <View style={styles.bodyTextContainer}>
                 <Text style={styles.bodyText}>
